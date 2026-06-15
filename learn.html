@@ -11,7 +11,7 @@
     
     <style>
         .learn-container {
-            max-width: 800px;
+            max-width: 920px;
             margin: 0 auto;
             background-color: var(--bg-card);
             border: 1px solid var(--border-color);
@@ -37,13 +37,65 @@
             border-top: 1px solid var(--border-color);
             padding-top: 1.5rem;
         }
+        .lesson-body {
+            display: grid;
+            gap: 1.25rem;
+            color: var(--text-muted);
+            font-size: 1.02rem;
+        }
+        .lesson-intro {
+            color: var(--text-muted);
+            line-height: 1.75;
+        }
+        .lesson-section {
+            padding: 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            background: rgba(15, 23, 42, 0.22);
+        }
+        .lesson-section h3 {
+            margin-bottom: 0.65rem;
+            color: var(--text-main);
+            font-size: 1rem;
+        }
+        .lesson-list {
+            display: grid;
+            gap: 0.55rem;
+            padding-left: 1.15rem;
+        }
+        .lesson-list li {
+            line-height: 1.65;
+        }
+        .command-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 0.75rem;
+        }
+        .command-card {
+            padding: 0.85rem;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            background: rgba(2, 6, 23, 0.22);
+        }
+        .command-card code {
+            display: inline-block;
+            margin-bottom: 0.4rem;
+            color: var(--primary);
+            font-family: var(--font-mono);
+            font-weight: 700;
+        }
+        .command-card p {
+            color: var(--text-muted);
+            font-size: 0.94rem;
+            line-height: 1.55;
+        }
     </style>
 </head>
 <body>
 
     <header class="navbar">
         <div class="container navbar-container">
-            <a href="index.html" class="logo">🐧 Linux Quest</a>
+            <a href="index.html" class="logo"> Linux Quest</a>
             <nav style="display: flex; gap: 1rem; align-items: center;">
                 <div class="user-status-nav" id="nav-status">
                     <span class="badge" id="nav-rank">Loading...</span>
@@ -67,8 +119,8 @@
             </div>
 
             <div class="learn-actions">
-                <a href="chapters.html" style="color: var(--text-muted); text-decoration: none; font-size: 0.9rem;">← กลับไปแผนที่</a>
-                <a href="#" id="start-quest-btn" class="btn btn-primary">ไปทำ Quest ⚔️</a>
+                <a href="chapters.html" style="color: var(--text-muted); text-decoration: none; font-size: 0.9rem;">← Back</a>
+                <a href="#" id="start-quest-btn" class="btn btn-primary">Start</a>
             </div>
         </div>
     </main>
@@ -76,6 +128,8 @@
     <script src="js/storage.js"></script>
     <script src="js/ui.js"></script>
     <script src="js/router.js"></script>
+    <script src="js/lessons.js"></script>
+    <script src="js/modal.js"></script>
     
     <script>
         document.addEventListener('DOMContentLoaded', async () => {
@@ -89,7 +143,10 @@
             // เช็กสิทธิ์: ถ้าด่านนี้ยังล็อกอยู่ ห้ามแอบเข้าผ่าน URL
             const unlocked = getUnlockedChapters();
             if (!unlocked.includes(chapterId)) {
-                alert('ด่านนี้ยังไม่ถูกปลดล็อก!');
+                await showAppAlert('ด่านนี้ยังไม่ถูกปลดล็อก!', {
+                    title: 'ยังเข้าไม่ได้',
+                    icon: '!'
+                });
                 window.location.href = 'chapters.html';
                 return;
             }
@@ -103,17 +160,10 @@
                 if (currentChapter) {
                     document.getElementById('learn-chapter-number').innerText = `CHAPTER ${currentChapter.number}`;
                     document.getElementById('learn-title').innerText = currentChapter.title;
-                    document.getElementById('learn-content').innerText = currentChapter.description;
+                    const lessonExample = renderLessonContent(chapterId, currentChapter.description);
                     
                     // สร้างตัวอย่างคำสั่งจำลองตาม Chapter ID
-                    let exampleText = "";
-                    if(chapterId === 'ch1') {
-                        exampleText = "$ pwd\n/home/user/desktop\n\n$ ls\nDocuments  Downloads  Pictures";
-                    } else if(chapterId === 'ch2') {
-                        exampleText = "$ mkdir project\n$ touch project/index.html\n$ ls project\nindex.html";
-                    } else {
-                        exampleText = `$ ${currentChapter.title.toLowerCase()} --help`;
-                    }
+                    let exampleText = lessonExample;
                     document.getElementById('learn-example').innerText = exampleText;
 
                     // ผูกลิงก์ปุ่มไปหน้า Quest พร้อมส่งไอดีด่านไปด้วย

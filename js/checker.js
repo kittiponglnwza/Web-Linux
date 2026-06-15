@@ -38,7 +38,10 @@ async function loadQuestsForChapter(chapterId) {
         currentChapterQuests = allQuests.filter(q => q.chapterId === chapterId);
 
         if (currentChapterQuests.length === 0) {
-            alert('ไม่พบโจทย์ในบทนี้ ระบบกำลังพากลับหน้าแผนที่');
+            await showAppAlert('ไม่พบโจทย์ในบทนี้ ระบบกำลังพากลับหน้าแผนที่', {
+                title: 'ไม่พบโจทย์',
+                icon: '!'
+            });
             window.location.href = 'chapters.html';
             return;
         }
@@ -135,8 +138,11 @@ function handleCommandSubmit(userInput) {
             const nextChapterId = `ch${currentChNum + 1}`;
             unlockChapter(nextChapterId); 
 
-            setTimeout(() => {
-                alert('ยินดีด้วย! คุณผ่านบทนี้แล้ว ระบบจะพากลับไปที่แผนที่การเดินทาง');
+            setTimeout(async () => {
+                await showAppAlert('ยินดีด้วย! คุณผ่านบทนี้แล้ว ระบบจะพากลับไปที่แผนที่การเดินทาง', {
+                    title: 'ผ่าน Chapter แล้ว',
+                    icon: '✓'
+                });
                 window.location.href = 'chapters.html';
             }, 2000);
         }

@@ -83,6 +83,28 @@
     width: 100%;
 }
 
+.home-side {
+    display: grid;
+    gap: 1rem;
+    align-self: center;
+}
+
+.hero-photo {
+    min-height: clamp(260px, 34vw, 480px);
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    background:
+        linear-gradient(180deg, rgba(15, 23, 42, 0.05), rgba(15, 23, 42, 0.78)),
+        radial-gradient(circle at 78% 22%, rgba(16, 185, 129, 0.42), transparent 32%),
+        radial-gradient(circle at 18% 88%, rgba(99, 102, 241, 0.45), transparent 34%),
+        url("../assets/profile.jpg"),
+        var(--bg-card);
+    background-position: center;
+    background-size: cover;
+    box-shadow: var(--shadow-soft);
+}
+
 .status-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -147,6 +169,11 @@ main.container[style] {
         min-height: auto;
     }
 
+    .hero-photo {
+        order: -1;
+        min-height: 320px;
+    }
+
     .navbar-container {
         min-height: auto;
         padding: 0.85rem 0;
@@ -172,6 +199,10 @@ main.container[style] {
 
     .hero-title {
         font-size: 2.25rem;
+    }
+
+    .hero-photo {
+        min-height: 260px;
     }
 
     .status-grid,

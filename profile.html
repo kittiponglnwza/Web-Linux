@@ -31,7 +31,7 @@
 
     <header class="navbar">
         <div class="container navbar-container">
-            <a href="index.html" class="logo">🐧 Linux Quest</a>
+            <a href="index.html" class="logo"> Linux Quest</a>
             <nav style="display: flex; gap: 1rem; align-items: center;">
                 <div class="user-status-nav" id="nav-status">
                     <span class="badge" id="nav-rank">Loading...</span>
@@ -84,6 +84,7 @@
 
     <script src="js/storage.js"></script>
     <script src="js/ui.js"></script>
+    <script src="js/modal.js"></script>
     
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -103,11 +104,19 @@
             // 2. ระบบดักจับปุ่ม Reset Game
             const resetBtn = document.getElementById('reset-game-btn');
             if (resetBtn) {
-                resetBtn.addEventListener('click', () => {
-                    const confirmReset = confirm('คุณแน่ใจใช่ไหมว่าจะลบเซฟเกมทั้งหมด? คุณจะต้องเริ่มเรียนตั้งแต่ Chapter 1 ใหม่เลยนะ!');
+                resetBtn.addEventListener('click', async () => {
+                    const confirmReset = await showAppConfirm('คุณแน่ใจใช่ไหมว่าจะลบเซฟเกมทั้งหมด? คุณจะต้องเริ่มเรียนตั้งแต่ Chapter 1 ใหม่เลยนะ!', {
+                        title: 'ล้างข้อมูลทั้งหมด',
+                        icon: '!',
+                        confirmText: 'ล้างข้อมูล',
+                        cancelText: 'ยกเลิก'
+                    });
                     if (confirmReset) {
                         resetGameProgress(); // ฟังก์ชันล้างค่าใน storage.js
-                        alert('ล้างข้อมูลสำเร็จ! ระบบกำลังพากลับไปหน้าแรก');
+                        await showAppAlert('ล้างข้อมูลสำเร็จ! ระบบกำลังพากลับไปหน้าแรก', {
+                            title: 'สำเร็จ',
+                            icon: '✓'
+                        });
                         window.location.href = 'index.html';
                     }
                 });
