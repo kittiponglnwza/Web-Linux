@@ -61,7 +61,9 @@
     color: #cbd5e1;
     font-size: 0.92rem;
     line-height: 1.65;
-    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    white-space: pre-line;
+    word-break: normal;
 }
 
 .terminal-input-line {
@@ -74,9 +76,10 @@
 }
 
 .prompt {
+    max-width: 100%;
     color: #93c5fd;
     font-weight: 700;
-    white-space: nowrap;
+    overflow-wrap: anywhere;
 }
 
 .prompt-arrow {
@@ -86,6 +89,7 @@
 
 .terminal-input {
     min-width: 0;
+    width: 100%;
     flex: 1;
     border: none;
     outline: none;

@@ -1,26 +1,26 @@
 /* css/global.css */
 
 :root {
-    --bg-main: #f7f7f4;
-    --bg-soft: #efefe9;
-    --bg-card: #ffffff;
-    --text-main: #1d1d1b;
-    --text-muted: #6d6d66;
-    --text-faint: #94948b;
+    --bg-main: #0f172a;
+    --bg-soft: #172033;
+    --bg-card: #1e293b;
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --text-faint: #64748b;
 
-    --primary: #2563eb;
-    --primary-hover: #1d4ed8;
-    --secondary: #374151;
-    --accent: #c27803;
-    --danger: #dc2626;
+    --primary: #10b981;
+    --primary-hover: #059669;
+    --secondary: #6366f1;
+    --accent: #f59e0b;
+    --danger: #ef4444;
 
-    --border-color: #deded6;
-    --border-strong: #c9c9bf;
-    --shadow-soft: 0 18px 45px rgba(24, 24, 20, 0.08);
+    --border-color: #334155;
+    --border-strong: #475569;
+    --shadow-soft: 0 18px 45px rgba(2, 6, 23, 0.32);
 
     --radius: 8px;
     --radius-sm: 6px;
-    --font-sans: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    --font-sans: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     --font-mono: "Cascadia Mono", "Consolas", "Courier New", monospace;
 }
 
@@ -38,7 +38,7 @@ body {
     min-height: 100vh;
     font-family: var(--font-sans);
     background:
-        linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(247, 247, 244, 0) 280px),
+        linear-gradient(180deg, rgba(30, 41, 59, 0.72), rgba(15, 23, 42, 0) 280px),
         var(--bg-main);
     color: var(--text-main);
     line-height: 1.6;
@@ -55,5 +55,5 @@ input {
 }
 
 ::selection {
-    background: rgba(37, 99, 235, 0.16);
+    background: rgba(16, 185, 129, 0.26);
 }

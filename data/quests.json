@@ -4,8 +4,8 @@
     "chapterId": "ch1",
     "type": "quest",
     "title": "ตรวจสอบตำแหน่ง",
-    "question": "จงพิมพ์คำสั่งเพื่อตรวจสอบว่าปัจจุบันคุณกำลังทำงานอยู่ที่โฟลเดอร์ (Directory) ไหน?",
-    "hint": "คำสั่งนี้ย่อมาจาก Print Working Directory",
+    "question": "จงพิมพ์คำสั่งเพื่อตรวจสอบว่าปัจจุบันคุณกำลังทำงานอยู่ที่โฟลเดอร์ไหน?",
+    "hint": "คำสั่งย่อมาจาก Print Working Directory",
     "answers": ["pwd"]
   },
   {
@@ -13,8 +13,8 @@
     "chapterId": "ch1",
     "type": "quest",
     "title": "ส่องรอบตัว",
-    "question": "จงแสดงรายชื่อไฟล์และโฟลเดอร์ทั้งหมดที่อยู่ในตำแหน่งปัจจุบันของคุณ",
-    "hint": "คำสั่งนี้ย่อมาจาก List",
+    "question": "จงแสดงรายชื่อไฟล์และโฟลเดอร์ทั้งหมดในตำแหน่งปัจจุบัน",
+    "hint": "คำสั่งย่อมาจาก List (ls)",
     "answers": ["ls", "ls -l", "ls -la"]
   },
   {
@@ -22,26 +22,308 @@
     "chapterId": "ch1",
     "type": "boss",
     "title": "Boss Fight: บุกรุกห้องลับ",
-    "question": "จงย้ายเข้าไปในโฟลเดอร์ที่ชื่อว่า 'secret_room' (พิมพ์ทีละคำสั่งเมื่อผ่าน)",
-    "hint": "ใช้คำสั่ง Change Directory ตามด้วยชื่อโฟลเดอร์เป้าหมาย",
+    "question": "จงย้ายตัวเองเข้าไปในโฟลเดอร์ที่ชื่อว่า 'secret_room'",
+    "hint": "ใช้คำสั่ง Change Directory (cd) ตามด้วยชื่อโฟลเดอร์",
     "answers": ["cd secret_room", "cd ./secret_room"]
   },
   {
     "id": "q2_1",
     "chapterId": "ch2",
     "type": "quest",
-    "title": "สร้างฐานทัพ",
-    "question": "จงสร้างโฟลเดอร์ใหม่ชื่อว่า 'workspace'",
-    "hint": "ใช้คำสั่ง Make Directory (mkdir)",
-    "answers": ["mkdir workspace"]
+    "title": "คัดลอกพิมพ์เขียว",
+    "question": "จงคัดลอกไฟล์ชื่อ 'config.json' ไปเป็นไฟล์ใหม่ชื่อ 'config.bak'",
+    "hint": "ใช้คำสั่ง Copy (cp) ตามด้วย [ไฟล์ต้นทาง] [ไฟล์ปลายทาง]",
+    "answers": ["cp config.json config.bak"]
   },
   {
     "id": "q2_2",
     "chapterId": "ch2",
     "type": "quest",
-    "title": "เสกไฟล์เปล่า",
-    "question": "จงสร้างไฟล์เปล่าชื่อว่า 'note.txt' ไว้ในโฟลเดอร์ปัจจุบัน",
-    "hint": "ใช้คำสั่ง touch ตามด้วยชื่อไฟล์",
-    "answers": ["touch note.txt"]
+    "title": "ทำลายหลักฐาน",
+    "question": "จงลบไฟล์ขยะที่ชื่อว่า 'temp.log' ออกจากระบบ",
+    "hint": "ใช้คำสั่ง Remove (rm) ในการลบไฟล์",
+    "answers": ["rm temp.log", "rm ./temp.log"]
+  },
+  {
+    "id": "q2_boss",
+    "chapterId": "ch2",
+    "type": "boss",
+    "title": "Boss Fight: จัดหมวดหมู่คลังข้อมูล",
+    "question": "จงย้ายไฟล์ 'note.txt' เข้าไปไว้ในโฟลเดอร์ 'workspace'",
+    "hint": "ใช้คำสั่ง Move (mv)",
+    "answers": ["mv note.txt workspace", "mv note.txt workspace/"]
+  },
+  {
+    "id": "q3_1",
+    "chapterId": "ch3",
+    "type": "quest",
+    "title": "เปิดเครื่องมือแก้ไขไฟล์",
+    "question": "จงเปิดไฟล์ 'note.txt' ด้วยเครื่องมือ Text Editor ยอดนิยมที่ชื่อ nano",
+    "hint": "พิมพ์ชื่อโปรแกรมตามด้วยชื่อไฟล์ที่ต้องการแก้ไข",
+    "answers": ["nano note.txt"]
+  },
+  {
+    "id": "q3_2",
+    "chapterId": "ch3",
+    "type": "quest",
+    "title": "ส่องส่วนท้ายของล็อก",
+    "question": "จงแสดงข้อความ 10 บรรทัดสุดท้ายของไฟล์ 'system.log' บนหน้าจอ",
+    "hint": "ใช้คำสั่ง tail ในการส่องส่วนท้ายของไฟล์",
+    "answers": ["tail system.log"]
+  },
+  {
+    "id": "q3_boss",
+    "chapterId": "ch3",
+    "type": "boss",
+    "title": "Boss Fight: บันทึกธงชัย",
+    "question": "จงเขียนข้อความ 'flag{linux_master}' ต่อท้ายเข้าไปในไฟล์ 'backup.txt' โดยห้ามทับข้อมูลเก่า",
+    "hint": "ใช้ echo ร่วมกับเครื่องหมาย Redirection แบบคู่ (>>)",
+    "answers": ["echo flag{linux_master} >> backup.txt", "echo \"flag{linux_master}\" >> backup.txt"]
+  },
+  {
+    "id": "q4_1",
+    "chapterId": "ch4",
+    "type": "quest",
+    "title": "ปลดล็อกพลังสคริปต์",
+    "question": "จงเปลี่ยนสิทธิ์ไฟล์ 'run.sh' ให้สามารถกดรัน (Execute) ได้",
+    "hint": "ใช้คำสั่ง chmod +x",
+    "answers": ["chmod +x run.sh"]
+  },
+  {
+    "id": "q4_2",
+    "chapterId": "ch4",
+    "type": "quest",
+    "title": "สิทธิ์ของแอดมิน",
+    "question": "จงเปลี่ยนสิทธิ์ไฟล์ 'secure.txt' ให้เป็นแบบ 600 (เจ้าของอ่านเขียนได้คนเดียว)",
+    "hint": "ใช้คำสั่ง chmod ตามด้วยตัวเลขสิทธิ์",
+    "answers": ["chmod 600 secure.txt"]
+  },
+  {
+    "id": "q4_boss",
+    "chapterId": "ch4",
+    "type": "boss",
+    "title": "Boss Fight: ยึดครองกรรมสิทธิ์",
+    "question": "จงเปลี่ยนเจ้าของไฟล์ 'system.log' ให้กลายเป็นของยูสเซอร์ 'root'",
+    "hint": "ใช้คำสั่ง Change Ownership (chown)",
+    "answers": ["chown root system.log", "sudo chown root system.log"]
+  },
+  {
+    "id": "q5_1",
+    "chapterId": "ch5",
+    "type": "quest",
+    "title": "นับจำนวนบรรทัด",
+    "question": "จงนับจำนวนบรรทัดทั้งหมดที่อยู่ภายในไฟล์ 'log.txt'",
+    "hint": "ใช้คำสั่ง Word Count พร้อมออปชันนับบรรทัด (wc -l)",
+    "answers": ["wc -l log.txt"]
+  },
+  {
+    "id": "q5_2",
+    "chapterId": "ch5",
+    "type": "quest",
+    "title": "แกะรอยคีย์เวิร์ด",
+    "question": "จงค้นหาบรรทัดที่มีคำว่า 'error' ภายในไฟล์ 'server.log'",
+    "hint": "ใช้คำสั่ง grep ตามด้วยคำค้นหาและชื่อไฟล์",
+    "answers": ["grep error server.log", "grep \"error\" server.log"]
+  },
+  {
+    "id": "q5_boss",
+    "chapterId": "ch5",
+    "type": "boss",
+    "title": "Boss Fight: ค้นหาไฟล์ที่หายไป",
+    "question": "จงค้นหาไฟล์ทั้งหมดในไดเรกทอรีปัจจุบันที่ชื่อว่า 'flag.txt'",
+    "hint": "ใช้คำสั่ง find . -name [ชื่อไฟล์]",
+    "answers": ["find . -name flag.txt", "find -name flag.txt"]
+  },
+  {
+    "id": "q6_1",
+    "chapterId": "ch6",
+    "type": "quest",
+    "title": "อัปเดตคลังแสง",
+    "question": "จงอัปเดตดัชนีแพ็คเกจซอฟต์แวร์ในเครื่องด้วยสิทธิ์แอดมิน",
+    "hint": "ใช้ sudo apt update",
+    "answers": ["sudo apt update"]
+  },
+  {
+    "id": "q6_2",
+    "chapterId": "ch6",
+    "type": "quest",
+    "title": "ติดตั้งเครื่องมือดาวน์โหลด",
+    "question": "จงติดตั้งโปรแกรม 'wget' ลงในเครื่องด้วยคำสั่งแอดมิน",
+    "hint": "ใช้คำสั่ง sudo apt install [ชื่อโปรแกรม]",
+    "answers": ["sudo apt install wget"]
+  },
+  {
+    "id": "q6_boss",
+    "chapterId": "ch6",
+    "type": "boss",
+    "title": "Boss Fight: ถอนรากถอนโคน",
+    "question": "จงลบโปรแกรม 'nginx' ออกจากระบบ",
+    "hint": "ใช้คำสั่ง sudo apt remove [ชื่อโปรแกรม]",
+    "answers": ["sudo apt remove nginx", "sudo apt purge nginx"]
+  },
+  {
+    "id": "q7_1",
+    "chapterId": "ch7",
+    "type": "quest",
+    "title": "ส่องระบบแบบ Real-time",
+    "question": "จงเปิดหน้าต่างตรวจสอบ Process และการใช้ทรัพยากรเครื่องแบบ Real-time",
+    "hint": "คำสั่งสั้นๆ 3 ตัวอักษรยอดนิยมบน Linux (กด q เพื่อออก)",
+    "answers": ["top"]
+  },
+  {
+    "id": "q7_2",
+    "chapterId": "ch7",
+    "type": "quest",
+    "title": "ระบุตัวตนตัวร้าย",
+    "question": "จงหาหมายเลข PID ของโปรแกรมที่มีชื่อว่า 'bad_process'",
+    "hint": "ใช้คำสั่ง pgrep ตามด้วยชื่อโปรแกรม",
+    "answers": ["pgrep bad_process"]
+  },
+  {
+    "id": "q7_boss",
+    "chapterId": "ch7",
+    "type": "boss",
+    "title": "Boss Fight: ปลิดชีพกระบวนการ",
+    "question": "จงสั่งหยุดการทำงานของโปรแกรมหมายเลข PID '9999' แบบเด็ดขาดทันที",
+    "hint": "ใช้คำสั่ง kill -9 ตามด้วย PID",
+    "answers": ["kill -9 9999"]
+  },
+  {
+    "id": "q8_1",
+    "chapterId": "ch8",
+    "type": "quest",
+    "title": "ฉันคือใคร?",
+    "question": "จงพิมพ์คำสั่งเพื่อตรวจสอบชื่อยูสเซอร์ปัจจุบันที่คุณกำลังล็อกอินใช้งานอยู่",
+    "hint": "คำถามตรงตัวว่า Who am I?",
+    "answers": ["whoami"]
+  },
+  {
+    "id": "q8_2",
+    "chapterId": "ch8",
+    "type": "quest",
+    "title": "ตรวจเช็กความจุ",
+    "question": "จงตรวจสอบพื้นที่ว่างบนดิสก์ในรูปแบบหน่วยความจำที่มนุษย์อ่านง่าย",
+    "hint": "ใช้คำสั่ง df -h",
+    "answers": ["df -h"]
+  },
+  {
+    "id": "q8_boss",
+    "chapterId": "ch8",
+    "type": "boss",
+    "title": "Boss Fight: ตรวจสอบข้อมูลแกนหลัก",
+    "question": "จงแสดงข้อมูล Kernel และเวอร์ชันของระบบปฏิบัติการทั้งหมดออกมารายงานบนหน้าจอ",
+    "hint": "ใช้คำสั่ง uname พร้อมออปชัน -a (All)",
+    "answers": ["uname -a"]
+  },
+  {
+    "id": "q9_1",
+    "chapterId": "ch9",
+    "type": "quest",
+    "title": "ดึงไฟล์ข้ามโลก",
+    "question": "จงดาวน์โหลดไฟล์สคริปต์จากลิงก์ 'https://example.com/game.sh' มาเก็บไว้ในเครื่อง",
+    "hint": "ใช้คำสั่ง wget ตามด้วย URL",
+    "answers": ["wget https://example.com/game.sh"]
+  },
+  {
+    "id": "q9_2",
+    "chapterId": "ch9",
+    "type": "quest",
+    "title": "เคาะประตูทดสอบเน็ต",
+    "question": "จงส่งสัญญาณเช็กการเชื่อมต่อไปยังไอพี '8.8.8.8'",
+    "hint": "ใช้คำสั่ง ping",
+    "answers": ["ping 8.8.8.8"]
+  },
+  {
+    "id": "q9_boss",
+    "chapterId": "ch9",
+    "type": "boss",
+    "title": "Boss Fight: ยิงข้อมูลใส่ API",
+    "question": "จงดึงข้อความดิบจาก URL 'https://api.github.com' มาแสดงบนหน้าจอโดยตรง",
+    "hint": "ใช้คำสั่ง curl",
+    "answers": ["curl https://api.github.com"]
+  },
+  {
+    "id": "q10_1",
+    "chapterId": "ch10",
+    "type": "quest",
+    "title": "รันหุ่นยนต์ทำงาน",
+    "question": "จงสั่งรันไฟล์สคริปต์อัตโนมัติชื่อ 'deploy.sh' ในโฟลเดอร์ปัจจุบันให้ทำงาน",
+    "hint": "ใช้สัญลักษณ์ ./ นำหน้าชื่อสคริปต์",
+    "answers": ["./deploy.sh", "bash deploy.sh"]
+  },
+  {
+    "id": "q10_2",
+    "chapterId": "ch10",
+    "type": "quest",
+    "title": "ตรวจสอบค่าตัวแปรระบบ",
+    "question": "จงพิมพ์คำสั่งเพื่อแสดงค่าที่อยู่ภายในตัวแปรสภาพแวดล้อมระบบที่ชื่อว่า PATH",
+    "hint": "ใช้คำสั่ง echo ร่วมกับเครื่องหมาย $ นำหน้าตัวแปร",
+    "answers": ["echo $PATH"]
+  },
+  {
+    "id": "q10_boss",
+    "chapterId": "ch10",
+    "type": "boss",
+    "title": "Boss Fight: The Linux Wizard",
+    "question": "จงเขียนชุดคำสั่งในไฟล์สคริปต์เพื่อสร้างโฟลเดอร์ชื่อ 'backup' คัดลอกไฟล์ 'note.txt' เข้าไป แล้วรายงานคำว่า 'Backup Complete' ออกมา",
+    "hint": "คำสั่งที่ต้องพิมพ์เรียงกันคือ: mkdir backup && cp note.txt backup/ && echo \"Backup Complete\"",
+    "answers": [
+      "mkdir backup && cp note.txt backup/ && echo \"Backup Complete\"",
+      "mkdir backup && cp note.txt backup && echo \"Backup Complete\""
+    ]
+  },
+  {
+    "id": "q11_1",
+    "chapterId": "ch11",
+    "type": "quest",
+    "title": "มัดตราสังข์โฟลเดอร์",
+    "question": "จงมัดรวมโฟลเดอร์ชื่อ 'project' ให้กลายเป็นไฟล์บีบอัดชื่อ 'project.tar.gz' ด้วยคำสั่ง tar",
+    "hint": "ใช้คำสั่ง tar พร้อมออปชัน -czvf ตามด้วย [ชื่อไฟล์ปลายทาง] [โฟลเดอร์ต้นทาง]",
+    "answers": ["tar -czvf project.tar.gz project", "tar -czvf project.tar.gz project/"]
+  },
+  {
+    "id": "q11_2",
+    "chapterId": "ch11",
+    "type": "quest",
+    "title": "แตกกล่องพัสดุ zip",
+    "question": "จงทำการแตกไฟล์บีบอัดที่ชื่อว่า 'source.zip' ออกมาใช้งาน",
+    "hint": "ใช้คำสั่ง unzip ตรง ๆ ตามด้วยชื่อไฟล์",
+    "answers": ["unzip source.zip"]
+  },
+  {
+    "id": "q11_boss",
+    "chapterId": "ch11",
+    "type": "boss",
+    "title": "Boss Fight: คลายมนต์สะกด tar",
+    "question": "จงทำการแตกไฟล์บีบอัดตระกูลสากลชื่อ 'backup.tar.gz' ออกมาในโฟลเดอร์ปัจจุบัน",
+    "hint": "ใช้คำสั่ง tar พร้อมออปชันการแตกไฟล์ (-xzvf)",
+    "answers": ["tar -xzvf backup.tar.gz"]
+  },
+  {
+    "id": "q12_1",
+    "chapterId": "ch12",
+    "type": "quest",
+    "title": "วาร์ปข้ามมิติด้วย SSH",
+    "question": "จงเชื่อมต่อไปยังเซิร์ฟเวอร์ปลายทางไอพี '192.168.1.50' ด้วยชื่อผู้ใช้ 'admin'",
+    "hint": "ใช้คำสั่ง ssh [user]@[ip]",
+    "answers": ["ssh admin@192.168.1.50"]
+  },
+  {
+    "id": "q12_2",
+    "chapterId": "ch12",
+    "type": "quest",
+    "title": "เปิด-ปิดสวิตช์บริการ",
+    "question": "จงสั่งเปิดการทำงาน (Start) ของบริการเว็บเซิร์ฟเวอร์ที่ชื่อว่า 'nginx' ในระบบ",
+    "hint": "ใช้คำสั่งควบคุมเซอร์วิสอย่าง sudo systemctl start [ชื่อบริการ]",
+    "answers": ["sudo systemctl start nginx", "systemctl start nginx"]
+  },
+  {
+    "id": "q12_boss",
+    "chapterId": "ch12",
+    "type": "boss",
+    "title": "Boss Fight: ราชาแฮกเกอร์ผู้ตั้งเวลา",
+    "question": "จงพิมพ์คำสั่งเพื่อเข้าไปแก้ไขตารางเวลาการทำงานอัตโนมัติ (Cron Jobs) ของผู้ใช้ปัจจุบัน",
+    "hint": "ใช้คำสั่ง crontab พร้อมออปชัน -e (Edit)",
+    "answers": ["crontab -e"]
   }
 ]
