@@ -14,7 +14,7 @@
         body {
             background:
                 linear-gradient(180deg, rgba(15, 23, 42, 0.70) 0%, rgba(15, 23, 42, 0.58) 100%),
-                url("assets/profile.jpg") center / cover no-repeat fixed,
+                url("assets/yuta.jpg") center / cover no-repeat fixed,
                 var(--bg-main);
         }
 
@@ -188,6 +188,11 @@
             width: 100%;
             font-weight: 800;
         }
+
+        .world-tab {
+            text-decoration: none;
+            color: inherit;
+        }
     </style>
 </head>
 
@@ -195,7 +200,7 @@
 
     <header class="navbar">
         <div class="container navbar-container">
-            <a href="index.html" class="logo">⚔️ LINUX QUEST</a>
+            <a href="index.html" class="logo"> LINUX QUEST</a>
             <nav style="display: flex; gap: 1rem; align-items: center;">
                 <div class="user-status-nav" id="nav-status">
                     <span class="badge" id="nav-rank">Loading...</span>
@@ -211,20 +216,21 @@
         <header style="text-align: center; margin-bottom: 1rem;">
             <h2
                 style="font-size: 2.3rem; font-weight: 900; background: linear-gradient(to right, #ffffff, #94a3b8); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
-                🎯 คอนโซลภารกิจหลัก (Campaign Mode)
+                ⚡ Campaign Mode
             </h2>
             <p style="color: var(--text-muted); margin-top: 0.5rem; font-size: 0.98rem;">
-                สลับเลือก Chapter และลุยตามเส้นทางยุทธวิธีเพื่อทะลวงด่านระบบ Linux Terminal
+                เลือก Chapter ปัจจุบัน แล้วฝ่าฟันภารกิจทีละขั้น
+                สะสม XP ปลดล็อกด่านใหม่ และก้าวสู่ตำแหน่ง Linux Master
             </p>
         </header>
 
         <div class="world-selector-tabs">
             <a href="/chapters.html" class="world-tab active">
-                <span>📂</span> CH 01: Core System
+                <span>📂</span> Training Mode
             </a>
 
             <a href="ch02.html" class="world-tab">
-                <span>🔧</span> CH 02: File Master
+                <span>💀</span> Challenge Mode
             </a>
         </div>
 

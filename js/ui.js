@@ -82,11 +82,11 @@ async function renderChapterMap() {
             // ถ้าเป็นด่านล่าสุดที่ปลดล็อก (ตัวสุดท้ายใน Array ที่ปลดล็อก)
             if (unlockedChapters[unlockedChapters.length - 1] === ch.id) {
                 statusClass = 'current';
-                badgeText = '▶️ Current';
+                badgeText = '▶   Current';
                 isCurrent = true;
             } else {
                 statusClass = 'done';
-                badgeText = '✅ Done';
+                badgeText = '✔  Done';
             }
         }
 
