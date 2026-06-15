@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Challenge Mode | Linux Quest</title>
+
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/terminal.css">
+
+    <style>
+        body {
+            background:
+                linear-gradient(rgba(15, 23, 42, .85), rgba(15, 23, 42, .9)),
+                url("assets/yuta.jpg") center/cover fixed;
+        }
+
+        .page-header {
+            text-align: center;
+            margin: 3rem 0;
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            font-weight: 900;
+        }
+
+        .page-header p {
+            color: var(--text-muted);
+            margin-top: .75rem;
+        }
+
+        .challenge-container {
+            max-width: 900px;
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .mission-badge {
+            width: fit-content;
+            padding: .45rem .9rem;
+            border-radius: 999px;
+            font-size: .8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .terminal-log {
+            white-space: pre-wrap;
+            font-family: monospace;
+            line-height: 1.5;
+        }
+
+        .submit-btn {
+            margin-top: 1rem;
+            width: 100%;
+            border: none;
+            border-radius: 10px;
+            padding: .9rem;
+            cursor: pointer;
+            font-weight: 700;
+            color: white;
+            background: linear-gradient(135deg, #10b981, #059669);
+        }
+
+        .next-btn {
+            margin-top: 1rem;
+            width: 100%;
+            border: none;
+            border-radius: 10px;
+            padding: .9rem;
+            cursor: pointer;
+            font-weight: 700;
+            color: white;
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+        }
+
+        .result {
+            margin-top: 1rem;
+            font-weight: 700;
+        }
+
+        .success {
+            color: #22c55e;
+        }
+
+        .fail {
+            color: #ef4444;
+        }
+
+        .complete-screen {
+            text-align: center;
+            padding: 3rem;
+            background: rgba(30, 41, 59, 0.7);
+            border: 2px solid #10b981;
+            border-radius: 12px;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+    <main class="container">
+
+        <header class="page-header">
+            <h1>⚡ Challenge Mode</h1>
+            <p>แก้ปัญหาจากสถานการณ์จริงด้วยคำสั่ง Linux</p>
+        </header>
+
+        <div class="challenge-container" id="challenge-container">
+            </div>
+
+    </main>
+
+    <script>
+        let globalChallenges = [];
+        let currentIndex = 0; 
+
+        // ดึงข้อมูลจากไฟล์ JSON
+        fetch("/data/challenge.json")
+            .then(response => response.json())
+            .then(challenges => {
+                globalChallenges = challenges;
+                renderCurrentChallenge(); 
+            })
+            .catch(error => {
+                console.error("Error loading JSON:", error);
+                document.getElementById("challenge-container").innerHTML = `<p style="color:red; text-align:center;">โหลดไฟล์ challenge.json ไม่สำเร็จ กรุณาเช็ก Console (F12)</p>`;
+            });
+
+        // ฟังก์ชันแสดงด่านปัจจุบัน
+        function renderCurrentChallenge() {
+            const container = document.getElementById("challenge-container");
+            
+            // เช็กว่าทำครบทุกด่านหรือยัง
+            if (currentIndex >= globalChallenges.length) {
+                container.innerHTML = `
+                    <div class="complete-screen">
+                        <h2>🎉 All Missions Completed!</h2>
+                        <p style="margin-top: 1rem; color: #94a3b8;">คุณได้แก้ปัญหา Linux ครบทั้ง 12 บทเรียนเรียบร้อยแล้ว สุดยอดกวนกวาด!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            const mission = globalChallenges[currentIndex];
+
+            // ตกแต่งสีของ Badge ตามประเภทด่าน (Quest ปกติสีเขียว / Boss สีแดง)
+            const isBoss = mission.type === "boss";
+            const badgeStyle = isBoss 
+                ? `background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); color: #f87171;`
+                : `background: rgba(16, 185, 129, .15); border: 1px solid rgba(16, 185, 129, .3); color: #34d399;`;
+
+            container.innerHTML = `
+            <div class="terminal-window">
+                <div class="terminal-header">
+                    <div class="terminal-dots">
+                        <span class="dot red"></span>
+                        <span class="dot yellow"></span>
+                        <span class="dot green"></span>
+                    </div>
+                    <div class="terminal-title">
+                        challenge://${mission.chapterId}/${mission.id} (${currentIndex + 1}/${globalChallenges.length})
+                    </div>
+                </div>
+
+                <div class="terminal-body">
+                    <div class="mission-badge" style="${badgeStyle}">
+                        ⚡ ${mission.type}: ${mission.title} • +${mission.xp} XP
+                    </div>
+
+                    <div class="terminal-log">[MISSION BRIEF]
+
+${mission.scenario}
+
+<!-- ━━━━━━━━━━━━━━━━━━
+
+Objective:
+${mission.objective} -->
+
+Reward:
++${mission.xp} XP</div>
+
+                    <div class="terminal-input-line">
+                        <span class="prompt">student@linuxquest</span>
+                        <span class="prompt-arrow">$</span>
+                        <input
+                            class="terminal-input"
+                            id="answer-${mission.id}"
+                            placeholder="Enter Linux Command..."
+                            onkeydown="if(event.key === 'Enter') checkAnswer()"
+                            autocomplete="off"
+                        >
+                    </div>
+
+                    <button class="submit-btn" onclick="checkAnswer()">
+                        Execute
+                    </button>
+
+                    <div class="result" id="result-${mission.id}"></div>
+                </div>
+            </div>
+            `;
+
+            // Auto focus ไปที่ช่องกรอก
+            setTimeout(() => {
+                const inputEl = document.getElementById(`answer-${mission.id}`);
+                if (inputEl) inputEl.focus();
+            }, 50);
+        }
+
+        // ฟังก์ชันตรวจคำตอบ (แก้ไขให้รองรับ Array .answers แล้ว)
+        function checkAnswer() {
+            const mission = globalChallenges[currentIndex];
+            const input = document.getElementById(`answer-${mission.id}`);
+            const result = document.getElementById(`result-${mission.id}`);
+            const userAnswer = input.value.trim();
+
+            // ใช้ .some() เพื่อเช็กว่าคำตอบที่ผู้เล่นพิมพ์มา ตรงกับข้อใดข้อหนึ่งใน Array หรือไม่
+            const isCorrect = mission.answers.some(ans => ans.trim() === userAnswer);
+
+            if (isCorrect) {
+                result.className = "result success";
+                result.innerHTML = `
+                    ✅ Mission Complete<br>
+                    +${mission.xp} XP Earned
+                    <button class="next-btn" onclick="nextChallenge()">Next Mission </button>
+                `;
+                input.disabled = true;
+            } else {
+                result.className = "result fail";
+                result.innerHTML = `❌ Incorrect Command`;
+            }
+        }
+
+        function nextChallenge() {
+            currentIndex++;
+            renderCurrentChallenge();
+        }
+    </script>
+
+</body>
+
+</html>

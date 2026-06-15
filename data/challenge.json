@@ -1,0 +1,145 @@
+
+[
+  {
+    "id": "q1_1",
+    "chapterId": "ch1",
+    "type": "quest",
+    "difficulty": "Easy",
+    "xp": 15,
+    "title": "หาตำแหน่งทำงาน",
+    "scenario": "คุณเปิด Terminal ขึ้นมาทำงานในโปรเจกต์ของทีม แต่ไม่แน่ใจว่าตอนนี้อยู่ในโฟลเดอร์ใดของระบบ",
+    "objective": "ตรวจสอบตำแหน่งปัจจุบันของคุณ",
+    "answers": ["pwd"]
+  },
+  {
+    "id": "q1_2",
+    "chapterId": "ch1",
+    "type": "quest",
+    "difficulty": "Easy",
+    "xp": 15,
+    "title": "สำรวจโปรเจกต์",
+    "scenario": "คุณเข้ามาในโฟลเดอร์โปรเจกต์แล้ว แต่ยังไม่รู้ว่ามีไฟล์หรือโฟลเดอร์อะไรอยู่ภายใน",
+    "objective": "ดูรายการไฟล์และโฟลเดอร์ทั้งหมด",
+    "answers": ["ls", "ls -l", "ls -la"]
+  },
+  {
+    "id": "q1_boss",
+    "chapterId": "ch1",
+    "type": "boss",
+    "difficulty": "Medium",
+    "xp": 40,
+    "title": "เข้าห้องทำงาน",
+    "scenario": "ทีมงานแจ้งว่าซอร์สโค้ดทั้งหมดอยู่ในโฟลเดอร์ project และคุณต้องเข้าไปแก้ไขงานภายในนั้น",
+    "objective": "เข้าสู่โฟลเดอร์ project",
+    "answers": ["cd project", "cd ./project"]
+  },
+  {
+    "id": "q2_1",
+    "chapterId": "ch2",
+    "type": "quest",
+    "difficulty": "Medium",
+    "xp": 20,
+    "title": "สำรองไฟล์ก่อนแก้ไข",
+    "scenario": "ก่อนแก้ไขไฟล์ config.json คุณต้องสร้างสำเนาเผื่อเกิดข้อผิดพลาดระหว่างการทำงาน",
+    "objective": "สร้างไฟล์สำรองชื่อ config.bak",
+    "answers": ["cp config.json config.bak"]
+  },
+  {
+    "id": "q2_2",
+    "chapterId": "ch2",
+    "type": "quest",
+    "difficulty": "Medium",
+    "xp": 20,
+    "title": "ล้างไฟล์ชั่วคราว",
+    "scenario": "หลังติดตั้งระบบเสร็จ มีไฟล์ temp.log ที่ไม่จำเป็นหลงเหลืออยู่",
+    "objective": "ลบไฟล์ดังกล่าวออกจากระบบ",
+    "answers": ["rm temp.log", "rm ./temp.log"]
+  },
+  {
+    "id": "q2_boss",
+    "chapterId": "ch2",
+    "type": "boss",
+    "difficulty": "Hard",
+    "xp": 50,
+    "title": "จัดระเบียบเอกสาร",
+    "scenario": "ทีมงานต้องการให้ย้ายไฟล์ note.txt ไปเก็บในโฟลเดอร์ workspace เพื่อให้ค้นหาได้ง่ายขึ้น",
+    "objective": "ย้ายไฟล์ไปยังโฟลเดอร์ workspace",
+    "answers": ["mv note.txt workspace", "mv note.txt workspace/"]
+  },
+  {
+    "id": "q3_1",
+    "chapterId": "ch3",
+    "type": "quest",
+    "difficulty": "Easy",
+    "xp": 20,
+    "title": "แก้ไขบันทึกการประชุม",
+    "scenario": "คุณต้องการเปิดไฟล์ note.txt เพื่อเพิ่มข้อมูลจากการประชุมล่าสุด",
+    "objective": "เปิดไฟล์ด้วย Text Editor",
+    "answers": ["nano note.txt"]
+  },
+  {
+    "id": "q3_2",
+    "chapterId": "ch3",
+    "type": "quest",
+    "difficulty": "Medium",
+    "xp": 25,
+    "title": "ตรวจสอบ Log ล่าสุด",
+    "scenario": "ไฟล์ system.log มีข้อมูลจำนวนมาก แต่คุณต้องการดูเหตุการณ์ล่าสุดเท่านั้น",
+    "objective": "แสดง 10 บรรทัดสุดท้ายของไฟล์",
+    "answers": ["tail system.log"]
+  },
+  {
+    "id": "q3_boss",
+    "chapterId": "ch3",
+    "type": "boss",
+    "difficulty": "Hard",
+    "xp": 60,
+    "title": "เพิ่มรหัสยืนยัน",
+    "scenario": "ระบบ Backup ต้องบันทึกข้อความ flag{linux_master} ต่อท้ายไฟล์ backup.txt โดยข้อมูลเดิมต้องไม่หาย",
+    "objective": "เพิ่มข้อความลงท้ายไฟล์",
+    "answers": [
+      "echo flag{linux_master} >> backup.txt",
+      "echo \"flag{linux_master}\" >> backup.txt"
+    ]
+  },
+  {
+    "id": "q5_1",
+    "chapterId": "ch5",
+    "type": "quest",
+    "difficulty": "Medium",
+    "xp": 25,
+    "title": "วิเคราะห์ขนาด Log",
+    "scenario": "คุณได้รับไฟล์ log.txt และต้องการทราบว่ามีข้อมูลทั้งหมดกี่บรรทัด",
+    "objective": "นับจำนวนบรรทัดในไฟล์",
+    "answers": ["wc -l log.txt"]
+  },
+  {
+    "id": "q5_2",
+    "chapterId": "ch5",
+    "type": "quest",
+    "difficulty": "Hard",
+    "xp": 30,
+    "title": "ตรวจสอบ Error",
+    "scenario": "ระบบแจ้งว่ามีข้อผิดพลาดเกิดขึ้นใน server.log คุณต้องดึงเฉพาะบรรทัดที่เกี่ยวข้องกับ error",
+    "objective": "ค้นหาข้อความ error ภายในไฟล์",
+    "answers": [
+      "grep error server.log",
+      "grep \"error\" server.log"
+    ]
+  },
+  {
+    "id": "q5_boss",
+    "chapterId": "ch5",
+    "type": "boss",
+    "difficulty": "Expert",
+    "xp": 70,
+    "title": "ค้นหาไฟล์ที่หายไป",
+    "scenario": "ทีมงานทำไฟล์ flag.txt หายไว้ในโปรเจกต์ขนาดใหญ่ซึ่งมีหลายชั้นของโฟลเดอร์",
+    "objective": "ค้นหาไฟล์ดังกล่าวจากตำแหน่งปัจจุบัน",
+    "answers": [
+      "find . -name flag.txt",
+      "find -name flag.txt"
+    ]
+  }
+]
+
