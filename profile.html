@@ -8,22 +8,179 @@
     <link rel="stylesheet" href="css/global.css">
     <link rel="stylesheet" href="css/layout.css">
     <link rel="stylesheet" href="css/components.css">
-    
+
     <style>
         .profile-container {
-            max-width: 600px;
+            max-width: 640px;
             margin: 0 auto;
         }
-        .stats-box {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-            margin: 1.5rem 0;
+
+        /* ── Profile Hero ── */
+        .profile-hero { padding: 0; overflow: hidden; text-align: center; }
+
+        .profile-banner {
+            height: 90px;
+            background: linear-gradient(135deg,
+                rgba(16, 185, 129, 0.28) 0%,
+                rgba(99, 102, 241, 0.28) 100%);
         }
+
+        .profile-avatar {
+            width: 76px;
+            height: 76px;
+            margin: -38px auto 0;
+            position: relative;
+            z-index: 1;
+            border-radius: 50%;
+            border: 3px solid var(--bg-card);
+            background: linear-gradient(135deg, rgba(16,185,129,.18), rgba(99,102,241,.18));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.1rem;
+        }
+
+        .profile-body { padding: 0.85rem 1.5rem 1.5rem; }
+
+        .profile-name {
+            font-size: 1.12rem;
+            font-weight: 800;
+            margin-bottom: 0.3rem;
+            color: var(--text-main);
+        }
+
+        /* ── Stats ── */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.75rem;
+            margin: 1rem 0;
+        }
+
+        .stat-card { padding: 1rem 0.5rem; text-align: center; }
+
+        .stat-value {
+            font-size: 1.75rem;
+            font-weight: 800;
+            line-height: 1;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-label {
+            font-size: 0.68rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        /* ── Section header ── */
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 1.75rem 0 0.85rem;
+        }
+
+        .section-title {
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .04em;
+            color: var(--text-muted);
+        }
+
+        .section-pill {
+            padding: .18rem .55rem;
+            border-radius: var(--radius-sm);
+            background: var(--bg-soft);
+            border: 1px solid var(--border-color);
+            font-size: .7rem;
+            font-weight: 700;
+            color: var(--text-faint);
+        }
+
+        /* ── History items ── */
+        .history-list { display: flex; flex-direction: column; gap: .5rem; }
+
+        .history-item {
+            display: grid;
+            grid-template-columns: 40px 1fr auto;
+            align-items: center;
+            gap: .85rem;
+            padding: .85rem 1rem;
+        }
+
+        .history-icon {
+            width: 40px;
+            height: 40px;
+            flex-shrink: 0;
+            border-radius: var(--radius-sm);
+            background: rgba(16,185,129,.09);
+            border: 1px solid rgba(16,185,129,.20);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.05rem;
+        }
+
+        .history-title {
+            font-size: .88rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: .12rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .history-meta { font-size: .72rem; color: var(--text-faint); }
+
+        .history-xp {
+            font-size: .82rem;
+            font-weight: 800;
+            color: var(--primary);
+            white-space: nowrap;
+        }
+
+        /* ── Empty state ── */
+        .history-empty {
+            text-align: center;
+            padding: 2.25rem 1rem;
+            color: var(--text-faint);
+        }
+
+        .history-empty .ei { font-size: 2rem; margin-bottom: .5rem; }
+
+        .history-empty p {
+            font-size: .88rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        /* ── Danger Zone ── */
         .danger-zone {
-            margin-top: 3rem;
-            border-top: 1px dashed #ef4444;
+            margin-top: 2.5rem;
+            border-top: 1px dashed rgba(239,68,68,.30);
             padding-top: 1.5rem;
+        }
+
+        .danger-zone h4 {
+            color: var(--danger);
+            font-size: .88rem;
+            margin-bottom: .45rem;
+        }
+
+        .danger-zone p {
+            color: var(--text-muted);
+            font-size: .85rem;
+            line-height: 1.65;
+            margin-bottom: 1rem;
+        }
+
+        @media (max-width: 480px) {
+            .stats-grid { gap: .5rem; }
+            .stat-value { font-size: 1.45rem; }
+            .history-item { grid-template-columns: 36px 1fr auto; gap: .6rem; padding: .75rem; }
         }
     </style>
 </head>
@@ -42,39 +199,56 @@
         </div>
     </header>
 
-    <main class="container" style="padding-top: 4rem; padding-bottom: 4rem;">
+    <main class="container" style="padding-top: clamp(2rem,5vw,4rem); padding-bottom: clamp(2rem,5vw,4rem);">
         <div class="profile-container">
-            
-            <div class="card" style="text-align: center; padding: 2.5rem 1.5rem;">
-                <div style="font-size: 4rem; margin-bottom: 1rem;">🧑‍💻</div>
-                <h2 style="margin-bottom: 0.5rem;">ผู้บัญชาการ Terminal</h2>
-                <p id="profile-rank" class="rank-display" style="font-size: 1.5rem;">Loading...</p>
-                
-                <div style="margin-top: 1.5rem; text-align: left;">
-                    <span style="font-size: 0.85rem; color: var(--text-muted);">ความคืบหน้าการเลื่อนแร็งค์</span>
-                    <div class="progress-bar-container">
-                        <div class="progress-bar" id="rank-progress"></div>
+
+            <!-- ─────────── Profile Hero ─────────── -->
+            <div class="card profile-hero">
+                <div class="profile-banner"></div>
+                <div class="profile-avatar">🧑‍💻</div>
+                <div class="profile-body">
+                    <div class="profile-name">ผู้บัญชาการ Terminal</div>
+                    <p id="profile-rank" class="rank-display" style="font-size:1.35rem; margin-bottom:1.1rem;">Loading...</p>
+                    <div>
+                        <div style="display:flex; justify-content:space-between; margin-bottom:.35rem;">
+                            <span style="font-size:.74rem; color:var(--text-muted);">ความคืบหน้าสู่แร็งค์ถัดไป</span>
+                            <span id="progress-pct" style="font-size:.74rem; color:var(--text-faint);"></span>
+                        </div>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar" id="rank-progress"></div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="stats-box">
-                <div class="card" style="text-align: center;">
-                    <p style="color: var(--text-muted); font-size: 0.9rem;">คะแนน XP ทั้งหมด</p>
-                    <p id="profile-xp" style="font-size: 2.2rem; font-weight: bold; color: var(--primary); margin-top: 0.5rem;">0</p>
+            <!-- ─────────── Stats ─────────── -->
+            <div class="stats-grid">
+                <div class="card stat-card">
+                    <div class="stat-value" id="profile-xp" style="color:var(--primary);">0</div>
+                    <div class="stat-label">XP ทั้งหมด</div>
                 </div>
-                <div class="card" style="text-align: center;">
-                    <p style="color: var(--text-muted); font-size: 0.9rem;">ด่านที่ปลดล็อกแล้ว</p>
-                    <p id="profile-chapters" style="font-size: 2.2rem; font-weight: bold; color: var(--secondary); margin-top: 0.5rem;">1 / 10</p>
+                <div class="card stat-card">
+                    <div class="stat-value" id="profile-chapters" style="color:var(--secondary);">0/10</div>
+                    <div class="stat-label">ด่านที่ผ่าน</div>
+                </div>
+                <div class="card stat-card">
+                    <div class="stat-value" id="profile-quests" style="color:var(--accent);">0</div>
+                    <div class="stat-label">เควสทำแล้ว</div>
                 </div>
             </div>
 
+            <!-- ─────────── Quiz History ─────────── -->
+            <div class="section-header">
+                <span class="section-title">บันทึกการทำแบบทดสอบ</span>
+                <span class="section-pill" id="history-count">0 รายการ</span>
+            </div>
+            <div class="history-list" id="history-list"></div>
+
+            <!-- ─────────── Danger Zone ─────────── -->
             <div class="danger-zone">
-                <h4 style="color: #ef4444; margin-bottom: 0.5rem;">⚠️ Danger Zone</h4>
-                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem;">
-                    หากกดปุ่มนี้ คะแนน XP ด่านที่ปลดล็อก และประวัติการทำเควสทั้งหมดจะถูกลบออกอย่างถาวรและไม่สามารถกู้คืนได้
-                </p>
-                <button id="reset-game-btn" class="btn" style="background-color: #ef4444; color: #ffffff; width: 100%;">
+                <h4>⚠️ Danger Zone</h4>
+                <p>หากกดปุ่มนี้ คะแนน XP ด่านที่ปลดล็อก และประวัติการทำเควสทั้งหมดจะถูกลบออกอย่างถาวรและไม่สามารถกู้คืนได้</p>
+                <button id="reset-game-btn" class="btn" style="color:#fff; width:100%;">
                     ลบข้อมูลและเริ่มเกมใหม่
                 </button>
             </div>
@@ -85,38 +259,97 @@
     <script src="js/storage.js"></script>
     <script src="js/ui.js"></script>
     <script src="js/modal.js"></script>
-    
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // 1. ดึงค่าจาก storage มาแปะแสดงผลในกล่องสถิติ
-            const xp = getXP();
-            const unlocked = getUnlockedChapters();
-            
-            document.getElementById('profile-xp').innerText = xp;
-            document.getElementById('profile-chapters').innerText = `${unlocked.length} / 10`;
-            
-            // รอให้ ui.js ทำงานเสร็จแล้วดึงข้อความแร็งค์มาแสดงตรงกลางตัวใหญ่ๆ
-            setTimeout(() => {
-                const navRankText = document.getElementById('nav-rank').innerText;
-                document.getElementById('profile-rank').innerText = navRankText;
-            }, 100);
 
-            // 2. ระบบดักจับปุ่ม Reset Game
+    <script>
+        /* ── รับประวัติเควส (รองรับทั้ง storage.js และ fallback localStorage) ── */
+        function getHistoryData() {
+            if (typeof getQuestHistory === 'function') return getQuestHistory() || [];
+            try {
+                const raw = localStorage.getItem('lq_history');
+                return raw ? JSON.parse(raw) : [];
+            } catch { return []; }
+        }
+
+        /* ── แปลงวันที่ ── */
+        function fmtDate(iso) {
+            if (!iso) return '—';
+            try {
+                return new Date(iso).toLocaleDateString('th-TH', {
+                    day: 'numeric', month: 'short', year: '2-digit'
+                });
+            } catch { return '—'; }
+        }
+
+        /* ── ไอคอนประจำแต่ละบท ── */
+        const ICONS = ['📁','📝','🔍','🔗','⚙️','🛡️','🔐','📡','🧩','🏆'];
+        const chIcon = id => ICONS[(id - 1) % ICONS.length] || '⚡';
+
+        /* ── Render ประวัติ ── */
+        function renderHistory(items) {
+            const list = document.getElementById('history-list');
+            const pill = document.getElementById('history-count');
+
+            if (!items || items.length === 0) {
+                pill.textContent = '0 รายการ';
+                list.innerHTML = `
+                    <div class="history-empty">
+                        <div class="ei">📋</div>
+                        <p>ยังไม่มีประวัติการทำแบบทดสอบ<br>ไปลองทำด่านแรกกันเถอะ!</p>
+                        <a href="chapters.html" class="btn btn-primary" style="display:inline-flex;">ไปแผนที่ด่าน</a>
+                    </div>`;
+                return;
+            }
+
+            const sorted = [...items].sort((a, b) =>
+                new Date(b.completedAt || 0) - new Date(a.completedAt || 0)
+            );
+
+            pill.textContent = `${sorted.length} รายการ`;
+            list.innerHTML = sorted.map(item => `
+                <div class="card history-item">
+                    <div class="history-icon">${chIcon(item.chapterId)}</div>
+                    <div style="min-width:0;">
+                        <div class="history-title">บทที่ ${item.chapterId} — ${item.title || 'ด่านผจญภัย'}</div>
+                        <div class="history-meta">${fmtDate(item.completedAt)}</div>
+                    </div>
+                    <div class="history-xp">+${item.xpEarned || 0} XP</div>
+                </div>`).join('');
+        }
+
+        /* ── Init ── */
+        document.addEventListener('DOMContentLoaded', () => {
+            const xp       = getXP();
+            const unlocked = getUnlockedChapters();
+            const history  = getHistoryData();
+
+            document.getElementById('profile-xp').textContent      = xp.toLocaleString();
+            document.getElementById('profile-chapters').textContent = `${unlocked.length}/10`;
+            document.getElementById('profile-quests').textContent   = history.length;
+
+            renderHistory(history);
+
+            /* รอ ui.js set ค่าแร็งค์ก่อน */
+            setTimeout(() => {
+                const navRank = document.getElementById('nav-rank');
+                if (navRank) document.getElementById('profile-rank').textContent = navRank.innerText;
+
+                const bar = document.getElementById('rank-progress');
+                if (bar && bar.style.width) {
+                    document.getElementById('progress-pct').textContent = bar.style.width;
+                }
+            }, 150);
+
+            /* Reset button */
             const resetBtn = document.getElementById('reset-game-btn');
             if (resetBtn) {
                 resetBtn.addEventListener('click', async () => {
-                    const confirmReset = await showAppConfirm('คุณแน่ใจใช่ไหมว่าจะลบเซฟเกมทั้งหมด? คุณจะต้องเริ่มเรียนตั้งแต่ Chapter 1 ใหม่เลยนะ!', {
-                        title: 'ล้างข้อมูลทั้งหมด',
-                        icon: '!',
-                        confirmText: 'ล้างข้อมูล',
-                        cancelText: 'ยกเลิก'
-                    });
-                    if (confirmReset) {
-                        resetGameProgress(); // ฟังก์ชันล้างค่าใน storage.js
-                        await showAppAlert('ล้างข้อมูลสำเร็จ! ระบบกำลังพากลับไปหน้าแรก', {
-                            title: 'สำเร็จ',
-                            icon: '✓'
-                        });
+                    const ok = await showAppConfirm(
+                        'คุณแน่ใจใช่ไหมว่าจะลบเซฟเกมทั้งหมด? คุณจะต้องเริ่มเรียนตั้งแต่ Chapter 1 ใหม่เลยนะ!',
+                        { title: 'ล้างข้อมูลทั้งหมด', icon: '!', confirmText: 'ล้างข้อมูล', cancelText: 'ยกเลิก' }
+                    );
+                    if (ok) {
+                        resetGameProgress();
+                        await showAppAlert('ล้างข้อมูลสำเร็จ! ระบบกำลังพากลับไปหน้าแรก', { title: 'สำเร็จ', icon: '✓' });
                         window.location.href = 'index.html';
                     }
                 });
