@@ -1,44 +1,260 @@
 <!DOCTYPE html>
 <html lang="th">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chapter Map — Linux Quest</title>
-    
+    <title>Stage Select — Linux Quest</title>
+
     <link rel="stylesheet" href="css/global.css">
     <link rel="stylesheet" href="css/layout.css">
     <link rel="stylesheet" href="css/components.css">
+
+    <style>
+        body {
+            background:
+                linear-gradient(180deg, rgba(15, 23, 42, 0.70) 0%, rgba(15, 23, 42, 0.58) 100%),
+                url("assets/profile.jpg") center / cover no-repeat fixed,
+                var(--bg-main);
+        }
+
+        /* 🗺️ แก้ไขแถบเลือกบท (Tabs) ให้เรียงแถวสวยงาม ไม่บีบตัวอักษรแตก */
+        .world-selector-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 0.75rem;
+            margin: 2rem auto 3rem auto;
+            padding: 6px;
+            background: rgba(11, 15, 25, 0.6);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            width: max-content;
+            max-width: 100%;
+        }
+
+        .world-tab {
+            padding: 0.65rem 1.4rem;
+            border: none;
+            background: transparent;
+            color: var(--text-muted);
+            font-family: var(--font-mono);
+            font-weight: 700;
+            font-size: 0.88rem;
+            cursor: pointer;
+            border-radius: 10px;
+            white-space: nowrap;
+            /* ห้ามตัวหนังสือตัดขึ้นบรรทัดใหม่ */
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .world-tab.active {
+            background: var(--secondary);
+            color: #ffffff;
+            box-shadow: 0 4px 14px rgba(99, 102, 241, 0.4);
+        }
+
+        .world-tab.locked {
+            opacity: 0.35;
+            cursor: not-allowed;
+        }
+
+        /* 📍 จัดระเบียบคอนเทนเนอร์แผนที่แนวตั้งแบบคงที่ */
+        #chapters-container {
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem;
+            position: relative;
+            padding-left: 60px;
+            /* เว้นที่ด้านซ้ายอย่างแม่นยำให้เส้นและโหนด */
+            max-width: 760px;
+            margin: 0 auto;
+            counter-reset: chapter-counts;
+            /* เปิดระบบนับเลขด่านอัตโนมัติ */
+        }
+
+        /* 🟢 ท่อพลังงานแสงนีออน (เส้นแนวตั้ง) */
+        #chapters-container::before {
+            content: '';
+            position: absolute;
+            left: 28px;
+            /* จุดกึ่งกลางวงกลมพอดีเป๊ะ */
+            top: 25px;
+            bottom: 25px;
+            width: 4px;
+            background: linear-gradient(180deg, var(--primary) 0%, var(--secondary) 70%, var(--border-color) 100%);
+            box-shadow: 0 0 10px rgba(16, 185, 129, 0.25);
+            z-index: 1;
+        }
+
+        /* 🃏 รีเซ็ตและตกแต่งโครงสร้างการ์ดจาก JS */
+        .chapter-card {
+            position: relative !important;
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.7) 0%, rgba(15, 23, 42, 0.85) 100%) !important;
+            border: 1px solid var(--border-color) !important;
+            border-radius: 12px !important;
+            padding: 1.75rem !important;
+            min-height: auto !important;
+            backdrop-filter: blur(8px);
+            box-shadow: var(--shadow-soft) !important;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* 🔘 เสกวงกลมตัวเลขด่าน (01, 02) เจาะทะลุมาวางบนเส้นไทม์ไลน์พอดี */
+        .chapter-card::before {
+            counter-increment: chapter-counts;
+            content: counter(chapter-counts, decimal-leading-zero);
+            position: absolute;
+            left: -46px;
+            /* พิกัดล็อกกึ่งกลางเส้นแนวตั้ง */
+            top: 24px;
+            width: 32px;
+            height: 32px;
+            background: #0f172a;
+            border: 2px solid var(--border-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-mono);
+            font-weight: 800;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            z-index: 2;
+            box-shadow: 0 0 0 5px #0f172a;
+            /* หน้ากากถมดำตัดเส้นข้างหลัง */
+            transition: all 0.2s ease;
+        }
+
+        /* 🔥 สไตล์ด่านปัจจุบัน (Current) */
+        .chapter-card.current {
+            border-color: rgba(16, 185, 129, 0.5) !important;
+            box-shadow: 0 0 25px rgba(16, 185, 129, 0.12) !important;
+        }
+
+        /* 🔘 เสกวงกลมตัวเลขด่าน (01, 02) เจาะทะลุมาวางบนเส้นไทม์ไลน์พอดี */
+        /* 🟢 ท่อพลังงานแสงนีออน (เส้นแนวตั้ง) */
+        #chapters-container::before {
+            content: '';
+            position: absolute;
+            left: 28px;
+            top: 25px;
+            bottom: 25px;
+            width: 4px;
+            background: linear-gradient(180deg, var(--primary) 0%, var(--secondary) 70%, var(--border-color) 100%);
+            box-shadow: 0 0 10px rgba(16, 185, 129, 0.25);
+
+            /* 🛠️ แก้ไขบรรทัดนี้ */
+            z-index: 0;
+            /* หรือใช้ -1 เพื่อให้มันหลบไปอยู่ข้างหลังการ์ดและวงกลมทั้งหมด */
+        }
+
+        .chapter-card.current:hover {
+            transform: translateX(6px);
+            border-color: var(--primary) !important;
+        }
+
+        /* 🔒 สไตล์ด่านที่ล็อกอยู่ (Locked) */
+        .chapter-card.locked {
+            opacity: 0.45 !important;
+            background: rgba(15, 23, 42, 0.4) !important;
+            box-shadow: none !important;
+        }
+
+        .chapter-card.locked::before {
+            background: #1e293b;
+            border-color: rgba(255, 255, 255, 0.05);
+            color: var(--text-faint);
+        }
+
+        /* ตกแต่งองค์ประกอบข้อความด้านในให้คมชัดอ่านง่าย */
+        .chapter-card h3 {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 0.4rem;
+        }
+
+        .chapter-card p {
+            color: var(--text-muted);
+            font-size: 0.92rem;
+            margin-bottom: 1.25rem;
+            line-height: 1.5;
+        }
+
+        .chapter-card .btn {
+            width: 100%;
+            font-weight: 800;
+        }
+    </style>
 </head>
+
 <body>
 
     <header class="navbar">
         <div class="container navbar-container">
-            <a href="index.html" class="logo"> Linux Quest</a>
+            <a href="index.html" class="logo">⚔️ LINUX QUEST</a>
             <nav style="display: flex; gap: 1rem; align-items: center;">
                 <div class="user-status-nav" id="nav-status">
                     <span class="badge" id="nav-rank">Loading...</span>
                     <span class="xp-text" id="nav-xp">0 XP</span>
                 </div>
-                <a href="profile.html" class="btn btn-secondary">โปรไฟล์</a>
+                <a href="profile.html" class="btn btn-secondary">โปรไฟล์ผู้เล่น</a>
             </nav>
         </div>
     </header>
 
-    <main class="container" style="padding-top: 3rem; padding-bottom: 3rem;">
-        <section class="map-header">
-            <h2> แผนที่การเดินทาง</h2>
-            <p style="color: var(--text-muted); margin-top: 0.5rem;">
-                เคลียร์ Quest และล้ม Boss ในแต่ละบทเพื่อปลดล็อกเนื้อหาถัดไป
+    <main class="container" style="padding-top: 3.5rem; padding-bottom: 5rem;">
+
+        <header style="text-align: center; margin-bottom: 1rem;">
+            <h2
+                style="font-size: 2.3rem; font-weight: 900; background: linear-gradient(to right, #ffffff, #94a3b8); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                🎯 คอนโซลภารกิจหลัก (Campaign Mode)
+            </h2>
+            <p style="color: var(--text-muted); margin-top: 0.5rem; font-size: 0.98rem;">
+                สลับเลือก Chapter และลุยตามเส้นทางยุทธวิธีเพื่อทะลวงด่านระบบ Linux Terminal
             </p>
-        </section>
+        </header>
+
+        <div class="world-selector-tabs">
+            <a href="/chapters.html" class="world-tab active">
+                <span>📂</span> CH 01: Core System
+            </a>
+
+            <a href="ch02.html" class="world-tab">
+                <span>🔧</span> CH 02: File Master
+            </a>
+        </div>
 
         <section class="chapters-grid" id="chapters-container">
-            </section>
+        </section>
+
     </main>
 
     <script src="js/storage.js"></script>
     <script src="js/ui.js"></script>
     <script src="js/router.js"></script>
     <script src="js/app.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // ใช้ setTimeout เล็กน้อยเพื่อให้ระบบดึงข้อมูลด่านและสร้างการ์ดใน HTML เสร็จก่อน
+            setTimeout(() => {
+                // ค้นหาการ์ดที่มี class เป็น 'current' (ด่านปัจจุบันที่ยังไม่ผ่าน)
+                const currentChapter = document.querySelector('.chapter-card.current');
+
+                if (currentChapter) {
+                    // สั่งให้หน้าจอเลื่อน (Scroll) ไปหาด่านปัจจุบันแบบนุ่มนวล (Smooth)
+                    currentChapter.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'center' // จัดให้ด่านปัจจุบันอยู่ตรงกลางหน้าจอพอดี
+                    });
+                }
+            }, 300); // 300ms รอให้ระบบสร้าง UI จากฝั่ง js/app.js ให้เสร็จก่อน
+        });
+    </script>
 </body>
+
 </html>
