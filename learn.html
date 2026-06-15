@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>คัมภีร์คำสั่ง — Linux Quest</title>
+    
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+    
+    <style>
+        .learn-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 0.75rem;
+            padding: 2rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+        }
+        .code-block {
+            background-color: #0f172a;
+            border-left: 4px solid var(--primary);
+            padding: 1rem;
+            border-radius: 0.375rem;
+            font-family: 'Courier New', Courier, monospace;
+            color: #34d399;
+            margin: 1.5rem 0;
+            overflow-x: auto;
+        }
+        .learn-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 2rem;
+            border-top: 1px solid var(--border-color);
+            padding-top: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="container navbar-container">
+            <a href="index.html" class="logo">🐧 Linux Quest</a>
+            <nav style="display: flex; gap: 1rem; align-items: center;">
+                <div class="user-status-nav" id="nav-status">
+                    <span class="badge" id="nav-rank">Loading...</span>
+                    <span class="xp-text" id="nav-xp">0 XP</span>
+                </div>
+                <a href="chapters.html" class="btn btn-secondary">แผนที่ด่าน</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container" style="padding-top: 4rem; padding-bottom: 4rem;">
+        <div class="learn-container">
+            <p id="learn-chapter-number" style="color: var(--primary); font-weight: bold; font-size: 0.9rem; text-transform: uppercase;">CHAPTER --</p>
+            <h2 id="learn-title" style="margin-top: 0.25rem; margin-bottom: 1.5rem;">กำลังโหลดเนื้อหา...</h2>
+            
+            <div id="learn-content" style="color: var(--text-muted); font-size: 1.05rem;">
+                </div>
+
+            <div class="code-block">
+                <pre id="learn-example"># ตัวอย่างการใช้คำสั่งจะแสดงที่นี่</pre>
+            </div>
+
+            <div class="learn-actions">
+                <a href="chapters.html" style="color: var(--text-muted); text-decoration: none; font-size: 0.9rem;">← กลับไปแผนที่</a>
+                <a href="#" id="start-quest-btn" class="btn btn-primary">ไปทำ Quest ⚔️</a>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/storage.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/router.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const chapterId = getURLParam('id'); // ดึงค่า ?id=... จาก router.js
+            
+            if (!chapterId) {
+                window.location.href = 'chapters.html';
+                return;
+            }
+
+            // เช็กสิทธิ์: ถ้าด่านนี้ยังล็อกอยู่ ห้ามแอบเข้าผ่าน URL
+            const unlocked = getUnlockedChapters();
+            if (!unlocked.includes(chapterId)) {
+                alert('ด่านนี้ยังไม่ถูกปลดล็อก!');
+                window.location.href = 'chapters.html';
+                return;
+            }
+
+            // ดึงข้อมูลบทเรียนมาแสดงผล
+            try {
+                const response = await fetch('data/chapters.json');
+                const chapters = await response.json();
+                const currentChapter = chapters.find(ch => ch.id === chapterId);
+
+                if (currentChapter) {
+                    document.getElementById('learn-chapter-number').innerText = `CHAPTER ${currentChapter.number}`;
+                    document.getElementById('learn-title').innerText = currentChapter.title;
+                    document.getElementById('learn-content').innerText = currentChapter.description;
+                    
+                    // สร้างตัวอย่างคำสั่งจำลองตาม Chapter ID
+                    let exampleText = "";
+                    if(chapterId === 'ch1') {
+                        exampleText = "$ pwd\n/home/user/desktop\n\n$ ls\nDocuments  Downloads  Pictures";
+                    } else if(chapterId === 'ch2') {
+                        exampleText = "$ mkdir project\n$ touch project/index.html\n$ ls project\nindex.html";
+                    } else {
+                        exampleText = `$ ${currentChapter.title.toLowerCase()} --help`;
+                    }
+                    document.getElementById('learn-example').innerText = exampleText;
+
+                    // ผูกลิงก์ปุ่มไปหน้า Quest พร้อมส่งไอดีด่านไปด้วย
+                    document.getElementById('start-quest-btn').href = `quest.html?id=${chapterId}`;
+                }
+            } catch (error) {
+                console.error('โหลดเนื้อหาล้มเหลว:', error);
+            }
+        });
+    </script>
+</body>
+</html>

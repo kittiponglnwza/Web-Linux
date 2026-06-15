@@ -1,0 +1,104 @@
+/* css/layout.css */
+
+/* กล่องครอบจัดการความกว้างหน้าจอ */
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+/* Navigation Bar */
+.navbar {
+    background-color: var(--bg-card);
+    border-bottom: 1px solid var(--border-color);
+    padding: 1rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: var(--text-main);
+    text-decoration: none;
+}
+
+/* โครงสร้างหน้าหลัก (Main Content) */
+.main-layout {
+    padding: 4rem 1.5rem;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+}
+
+/* เมื่อหน้าจอใหญ่ขึ้น (เช่น บนคอม) ให้แบ่งเป็น 2 ฝั่งซ้าย-ขวา */
+@media (min-width: 768px) {
+    .main-layout {
+        grid-template-columns: 1.4fr 1fr;
+        align-items: center;
+    }
+}
+
+/* Hero Section (ฝั่งซ้าย) */
+.hero-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.hero-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+.highlight {
+    color: var(--primary);
+}
+
+.hero-subtitle {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    max-width: 540px;
+}
+
+/* Dashboard Section (ฝั่งขวา) */
+.dashboard-section {
+    width: 100%;
+}
+
+.status-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin: 1.5rem 0;
+}
+
+.status-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.status-item .label {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* การจัดวางกล่องด่านในหน้า Chapters (เพิ่มต่อท้ายไฟล์เดิม) */
+.chapters-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}

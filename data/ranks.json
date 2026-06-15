@@ -1,0 +1,7 @@
+[
+  { "id": 1, "name": "🥚 Linux Newbie", "minXp": 0 },
+  { "id": 2, "name": "🛡️ Junior Operator", "minXp": 50 },
+  { "id": 3, "name": "💻 Script Kiddie", "minXp": 150 },
+  { "id": 4, "name": "⚔️ Terminal Warrior", "minXp": 350 },
+  { "id": 5, "name": "👑 SysAdmin Legend", "minXp": 600 }
+]

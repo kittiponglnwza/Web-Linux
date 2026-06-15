@@ -1,0 +1,33 @@
+/* css/global.css */
+
+/* กำหนดตัวแปรสีและฟอนต์หลักของเว็บ */
+:root {
+    --bg-main: #0f172a;       /* สีพื้นหลังเว็บ (Slate 900) */
+    --bg-card: #1e293b;       /* สีพื้นหลังการ์ด/กล่องข้อความ (Slate 800) */
+    --text-main: #f8fafc;     /* สีตัวอักษรหลัก (Slate 50) */
+    --text-muted: #94a3b8;    /* สีตัวอักษรจางๆ สำหรับคำอธิบาย (Slate 400) */
+    
+    --primary: #10b981;       /* สีเขียวหลัก สไตล์ Terminal (Emerald 500) */
+    --primary-hover: #059669; /* สีเขียวตอนโดนเมาส์ชี้ */
+    --secondary: #6366f1;     /* สีน้ำเงิน/ม่วง สำหรับปุ่มรอง (Indigo 500) */
+    
+    --accent: #f59e0b;        /* สีส้ม/เหลือง สำหรับ Rank และ XP (Amber 500) */
+    --border-color: #334155;  /* สีเส้นขอบ (Slate 700) */
+    
+    --font-sans: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Reset สไตล์เริ่มต้น */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-sans);
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    line-height: 1.6;
+    overflow-x: hidden;
+}

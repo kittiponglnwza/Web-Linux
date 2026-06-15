@@ -1,0 +1,98 @@
+/* css/terminal.css */
+
+/* กล่องหน้าจอ Terminal หลัก */
+.terminal-window {
+    background-color: #050b14; /* สีดำลึกสไตล์คอนโซล */
+    border: 1px solid #1e293b;
+    border-radius: 0.5rem;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.7);
+    font-family: 'Courier New', Courier, monospace;
+    overflow: hidden;
+}
+
+/* แถบหัวหน้าต่าง Terminal (สไตล์ Mac/Linux Window) */
+.terminal-header {
+    background-color: #0f172a;
+    padding: 0.5rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-bottom: 1px solid #1e293b;
+}
+
+.terminal-dots {
+    display: flex;
+    gap: 0.4rem;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+.dot.red { background-color: #ef4444; }
+.dot.yellow { background-color: #f59e0b; }
+.dot.green { background-color: #10b981; }
+
+.terminal-title {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    margin-auto: center;
+    width: 100%;
+    text-align: center;
+    padding-right: 40px; /* ชดเชยจุดสามจุดให้ตรงกลางพอดี */
+}
+
+/* ส่วนแสดงผลตัวหนังสือภายใน Terminal */
+.terminal-body {
+    padding: 1.5rem;
+    min-height: 250px;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.terminal-log {
+    color: #94a3b8;
+    white-space: pre-wrap;
+    font-size: 0.95rem;
+}
+
+/* ส่วนกล่องพิมพ์คำสั่งปัจจุบัน */
+.terminal-input-line {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.prompt {
+    color: #38bdf8; /* สีฟ้าน้ำทะเลสำหรับ Username/Host */
+    font-weight: bold;
+}
+
+.prompt-arrow {
+    color: var(--primary); /* ลูกศรสีเขียว */
+    font-weight: bold;
+}
+
+/* ช่องกรอกข้อความแบบไร้ขอบ ดูกลมกลืนกับ Terminal */
+.terminal-input {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #34d399; /* สีเขียวพิมพ์คำสั่ง */
+    font-family: inherit;
+    font-size: 0.95rem;
+    flex: 1;
+}
+
+/* ระบบ Hint บล็อกแจ้งเตือน */
+.hint-box {
+    background-color: rgba(245, 158, 11, 0.1);
+    border: 1px dashed var(--accent);
+    padding: 1rem;
+    border-radius: 0.375rem;
+    color: var(--accent);
+    margin-top: 1rem;
+    display: none; /* ซ่อนไว้ก่อน ใบ้เมื่อตอบผิดเท่านั้น */
+}

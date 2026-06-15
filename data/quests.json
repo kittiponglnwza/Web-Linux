@@ -1,0 +1,47 @@
+[
+  {
+    "id": "q1_1",
+    "chapterId": "ch1",
+    "type": "quest",
+    "title": "ตรวจสอบตำแหน่ง",
+    "question": "จงพิมพ์คำสั่งเพื่อตรวจสอบว่าปัจจุบันคุณกำลังทำงานอยู่ที่โฟลเดอร์ (Directory) ไหน?",
+    "hint": "คำสั่งนี้ย่อมาจาก Print Working Directory",
+    "answers": ["pwd"]
+  },
+  {
+    "id": "q1_2",
+    "chapterId": "ch1",
+    "type": "quest",
+    "title": "ส่องรอบตัว",
+    "question": "จงแสดงรายชื่อไฟล์และโฟลเดอร์ทั้งหมดที่อยู่ในตำแหน่งปัจจุบันของคุณ",
+    "hint": "คำสั่งนี้ย่อมาจาก List",
+    "answers": ["ls", "ls -l", "ls -la"]
+  },
+  {
+    "id": "q1_boss",
+    "chapterId": "ch1",
+    "type": "boss",
+    "title": "Boss Fight: บุกรุกห้องลับ",
+    "question": "จงย้ายเข้าไปในโฟลเดอร์ที่ชื่อว่า 'secret_room' (พิมพ์ทีละคำสั่งเมื่อผ่าน)",
+    "hint": "ใช้คำสั่ง Change Directory ตามด้วยชื่อโฟลเดอร์เป้าหมาย",
+    "answers": ["cd secret_room", "cd ./secret_room"]
+  },
+  {
+    "id": "q2_1",
+    "chapterId": "ch2",
+    "type": "quest",
+    "title": "สร้างฐานทัพ",
+    "question": "จงสร้างโฟลเดอร์ใหม่ชื่อว่า 'workspace'",
+    "hint": "ใช้คำสั่ง Make Directory (mkdir)",
+    "answers": ["mkdir workspace"]
+  },
+  {
+    "id": "q2_2",
+    "chapterId": "ch2",
+    "type": "quest",
+    "title": "เสกไฟล์เปล่า",
+    "question": "จงสร้างไฟล์เปล่าชื่อว่า 'note.txt' ไว้ในโฟลเดอร์ปัจจุบัน",
+    "hint": "ใช้คำสั่ง touch ตามด้วยชื่อไฟล์",
+    "answers": ["touch note.txt"]
+  }
+]

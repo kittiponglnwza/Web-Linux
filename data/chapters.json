@@ -1,0 +1,32 @@
+[
+  {
+    "id": "ch1",
+    "number": 1,
+    "title": "Navigation พื้นฐาน",
+    "description": "เรียนรู้วิธีการเดินไปมาในโลกของ Terminal ด้วย pwd, ls, cd"
+  },
+  {
+    "id": "ch2",
+    "number": 2,
+    "title": "จัดการไฟล์และโฟลเดอร์",
+    "description": "ฝึกสร้าง ลบ ย้าย และคัดลอกไฟล์ด้วย mkdir, touch, cp, mv, rm"
+  },
+  {
+    "id": "ch3",
+    "number": 3,
+    "title": "ส่องเนื้อหาและการเขียนไฟล์",
+    "description": "อ่านข้อมูลในไฟล์และเขียนข้อความแบบด่วนด้วย cat, echo, redirection"
+  },
+  {
+    "id": "ch4",
+    "number": 4,
+    "title": "Permissions & Ownership",
+    "description": "ควบคุมสิทธิ์การเข้าถึงไฟล์ด้วย chmod และ chown"
+  },
+  { "id": "ch5", "number": 5, "title": "Grep & การค้นหา", "description": "ค้นหาคำในไฟล์และหาตำแหน่งไฟล์ด้วย grep, find" },
+  { "id": "ch6", "number": 6, "title": "Package Manager", "description": "ติดตั้งและอัปเดตซอฟต์แวร์ด้วย apt" },
+  { "id": "ch7", "number": 7, "title": "Process Management", "description": "ตรวจสอบและจัดการโปรแกรมที่รันอยู่ด้วย ps, top, kill" },
+  { "id": "ch8", "number": 8, "title": "System Information", "description": "ดูสเปกเครื่องและเนื้อหาฮาร์ดดิสก์ด้วย df, du, free" },
+  { "id": "ch9", "number": 9, "title": "Network Utilities", "description": "เช็กการเชื่อมต่อเครือข่ายด้วย ping, curl, ifconfig" },
+  { "id": "ch10", "number": 10, "title": "Shell Scripting", "description": "เขียนสคริปต์อัตโนมัติเบื้องต้นส่งท้ายการผจญภัย" }
+]

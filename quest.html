@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ตะลุย Quest — Linux Quest</title>
+
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/terminal.css">
+</head>
+
+<body>
+
+    <header class="navbar">
+        <div class="container navbar-container">
+            <a href="index.html" class="logo">🐧 Linux Quest</a>
+            <nav style="display: flex; gap: 1rem; align-items: center;">
+                <div class="user-status-nav" id="nav-status">
+                    <span class="badge" id="nav-rank">Loading...</span>
+                    <span class="xp-text" id="nav-xp">0 XP</span>
+                </div>
+                <a href="chapters.html" class="btn btn-secondary">ยอมแพ้/กลับแผนที่</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container main-layout" style="padding-top: 3rem; padding-bottom: 3rem;">
+
+        <section class="quest-info-section">
+            <div class="card" style="height: 100%; display: flex; flex-direction: column; gap: 1rem;">
+                <div>
+                    <span class="badge" id="quest-type-badge"
+                        style="background-color: rgba(16, 185, 129, 0.15);">QUEST</span>
+                </div>
+                <h2 id="quest-title">กำลังโหลดโจทย์...</h2>
+                <p id="quest-question" style="color: var(--text-muted); font-size: 1.05rem; line-height: 1.6;">
+                    --คำถามจะถูกดึงมาจากระบบหลังบ้าน--
+                </p>
+
+                <div class="hint-box" id="quest-hint-box">
+                    <strong>💡 คำใบ้:</strong> <span id="quest-hint-text">--</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="quest-terminal-section">
+            <div class="terminal-window">
+                <div class="terminal-header">
+                    <div class="terminal-dots">
+                        <div class="dot red"></div>
+                        <div class="dot yellow"></div>
+                        <div class="dot green"></div>
+                    </div>
+                    <div class="terminal-title">bash - linux_quest@ubuntu</div>
+                </div>
+
+                <div class="terminal-body">
+                    <div class="terminal-log" id="terminal-history">ยินดีต้อนรับสู่ Linux Quest Terminal...
+                        พิมพ์คำสั่งด้านล่างเพื่อตอบโจทย์ จากนั้นกด Enter</div>
+
+                    <div class="terminal-input-line">
+                        <span class="prompt">guest@linuxquest:~$</span>
+                        <span class="prompt-arrow">&gt;</span>
+                        <input type="text" id="terminal-input-field" class="terminal-input" autofocus autocomplete="off"
+                            placeholder="พิมพ์คำสั่งที่นี่...">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="js/storage.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/router.js"></script>
+    <script src="js/checker.js"></script>
+</body>
+
+</html>
