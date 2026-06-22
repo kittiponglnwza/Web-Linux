@@ -178,10 +178,110 @@
             margin-bottom: 1rem;
         }
 
+        .log-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .log-header h1 {
+            font-size: clamp(1.75rem, 4vw, 2.5rem);
+            line-height: 1.1;
+        }
+
+        .log-subtitle {
+            color: var(--text-muted);
+            margin-top: 0.35rem;
+        }
+
+        .log-summary {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .log-panel {
+            padding: 1rem;
+        }
+
+        .activity-log {
+            display: grid;
+            gap: 0.55rem;
+        }
+
+        .log-row {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto auto;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.8rem;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            background: rgba(15, 23, 42, 0.35);
+        }
+
+        .log-command {
+            color: var(--text-main);
+            font-family: var(--font-mono);
+            font-size: 0.92rem;
+            overflow-wrap: anywhere;
+        }
+
+        .log-meta {
+            color: var(--text-faint);
+            font-size: 0.76rem;
+            margin-top: 0.18rem;
+        }
+
+        .log-result {
+            min-width: 68px;
+            padding: 0.22rem 0.48rem;
+            border-radius: var(--radius-sm);
+            font-size: 0.72rem;
+            font-weight: 800;
+            text-align: center;
+            text-transform: uppercase;
+        }
+
+        .log-result.ok {
+            background: rgba(16, 185, 129, 0.12);
+            color: var(--primary);
+        }
+
+        .log-result.bad {
+            background: rgba(239, 68, 68, 0.12);
+            color: #f87171;
+        }
+
+        .log-xp {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+        .log-empty {
+            text-align: center;
+            padding: 2rem 1rem;
+            color: var(--text-muted);
+        }
+
+        .log-empty .btn {
+            margin-top: 1rem;
+        }
+
         @media (max-width: 480px) {
             .stats-grid { gap: .5rem; }
             .stat-value { font-size: 1.45rem; }
             .history-item { grid-template-columns: 36px 1fr auto; gap: .6rem; padding: .75rem; }
+            .log-header { flex-direction: column; }
+            .log-header .btn { width: 100%; }
+            .log-summary { grid-template-columns: 1fr; }
+            .log-row { grid-template-columns: 1fr; }
+            .log-result { width: fit-content; }
         }
     </style>
 </head>
@@ -190,7 +290,11 @@
     <header class="navbar">
         <div class="container navbar-container">
             <a href="index.html" class="logo"> Linux Quest</a>
-            <nav style="display: flex; gap: 1rem; align-items: center;">
+            <nav aria-label="Main navigation">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="chapters.html" class="nav-link">Chapters</a>
+                <a href="challenge.html" class="nav-link">Challenge</a>
+                <a href="profile.html" class="nav-link active">Log</a>
                 <div class="user-status-nav" id="nav-status">
                     <span class="badge" id="nav-rank">Loading...</span>
                     <span class="xp-text" id="nav-xp">0 XP</span>
@@ -262,6 +366,109 @@
     <script src="js/modal.js"></script>
 
     <script>
+        window.useActivityLogProfile = true;
+
+        function renderActivityLogPage() {
+            const container = document.querySelector('.profile-container');
+            if (!container) return;
+
+            const logs = getActivityLog();
+            const totalSuccess = logs.filter(item => item.result === 'success').length;
+            const totalFailed = logs.filter(item => item.result === 'failed').length;
+
+            container.innerHTML = `
+                <section class="log-header">
+                    <div>
+                        <p class="section-title">Local Storage</p>
+                        <h1>Activity Log</h1>
+                        <p class="log-subtitle">Command history stored only in this browser.</p>
+                    </div>
+                    <button id="clear-log-btn" class="btn btn-secondary">Clear Log</button>
+                </section>
+
+                <section class="log-summary">
+                    <div class="card stat-card">
+                        <div class="stat-value">${logs.length}</div>
+                        <div class="stat-label">Total</div>
+                    </div>
+                    <div class="card stat-card">
+                        <div class="stat-value" style="color:var(--primary);">${totalSuccess}</div>
+                        <div class="stat-label">Success</div>
+                    </div>
+                    <div class="card stat-card">
+                        <div class="stat-value" style="color:var(--danger);">${totalFailed}</div>
+                        <div class="stat-label">Failed</div>
+                    </div>
+                </section>
+
+                <section class="card log-panel">
+                    <div class="section-header">
+                        <span class="section-title">Recent Commands</span>
+                        <span class="section-pill">${logs.length} rows</span>
+                    </div>
+                    <div class="activity-log" id="activity-log"></div>
+                </section>
+            `;
+
+            renderActivityRows(logs);
+
+            document.getElementById('clear-log-btn').addEventListener('click', () => {
+                clearActivityLog();
+                renderActivityLogPage();
+            });
+        }
+
+        function renderActivityRows(logs) {
+            const list = document.getElementById('activity-log');
+            if (!list) return;
+
+            if (!logs.length) {
+                list.innerHTML = `
+                    <div class="log-empty">
+                        <p>No command log yet.</p>
+                        <a href="chapters.html" class="btn btn-primary">Start Quest</a>
+                    </div>
+                `;
+                return;
+            }
+
+            list.innerHTML = logs.map(item => {
+                const date = new Date(item.at);
+                const stamp = Number.isNaN(date.getTime())
+                    ? '-'
+                    : date.toLocaleString('th-TH', {
+                        day: '2-digit',
+                        month: 'short',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    });
+                const resultClass = item.result === 'success' ? 'ok' : 'bad';
+                const command = escapeHtml(item.command || '-');
+                const title = escapeHtml(item.title || item.questId || 'Command');
+
+                return `
+                    <article class="log-row">
+                        <div class="log-row-main">
+                            <div class="log-command">${command}</div>
+                            <div class="log-meta">${title} · ${item.page || 'quest'} · ${stamp}</div>
+                        </div>
+                        <span class="log-result ${resultClass}">${item.result}</span>
+                        <span class="log-xp">+${item.xp || 0} XP</span>
+                    </article>
+                `;
+            }).join('');
+        }
+
+        function escapeHtml(value) {
+            return String(value)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+
+        document.addEventListener('DOMContentLoaded', renderActivityLogPage);
         /* ── รับประวัติเควส (รองรับทั้ง storage.js และ fallback localStorage) ── */
         function getHistoryData() {
             if (typeof getQuestHistory === 'function') return getQuestHistory() || [];
@@ -319,6 +526,7 @@
 
         /* ── Init ── */
         document.addEventListener('DOMContentLoaded', () => {
+            if (window.useActivityLogProfile) return;
             const xp       = getXP();
             const unlocked = getUnlockedChapters();
             const history  = getHistoryData();

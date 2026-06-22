@@ -116,6 +116,15 @@ function handleCommandSubmit(userInput) {
         const xpEarned = currentQuest.type === 'boss' ? 50 : 10;
         addXP(xpEarned); // บวกแต้มในเซฟ
         completeQuest(currentQuest.id); // บันทึกว่าผ่านข้อนี้แล้ว
+        addActivityLog({
+            page: 'quest',
+            chapterId: currentQuest.chapterId,
+            questId: currentQuest.id,
+            title: currentQuest.title,
+            command: trimmedInput,
+            result: 'success',
+            xp: xpEarned
+        });
         updateGlobalStatus(); // อัปเดตตัวเลขแร็งค์บน Navbar ทันที
 
         historyContainer.innerHTML += `\n<span style="color: #34d399">>> ถูกต้อง! ได้รับ +${xpEarned} XP</span>\n`;
@@ -148,6 +157,15 @@ function handleCommandSubmit(userInput) {
         }
     } else {
         // --- กรณีตอบผิด ---
+        addActivityLog({
+            page: 'quest',
+            chapterId: currentQuest.chapterId,
+            questId: currentQuest.id,
+            title: currentQuest.title,
+            command: trimmedInput,
+            result: 'failed',
+            xp: 0
+        });
         historyContainer.innerHTML += `\n<span style="color: #ef4444">>> คำสั่งไม่ถูกต้อง หรือยังไม่ตรงกับเป้าหมายโจทย์ ลองใหม่อีกครั้ง!</span>`;
         
         // แสดงกล่องคำใบ้ฝั่งซ้ายมือ

@@ -4,7 +4,8 @@
 const STORAGE_KEYS = {
     XP: 'linux_quest_xp',
     UNLOCKED_CHAPTERS: 'linux_quest_unlocked_chapters',
-    COMPLETED_QUESTS: 'linux_quest_completed_quests'
+    COMPLETED_QUESTS: 'linux_quest_completed_quests',
+    ACTIVITY_LOG: 'linux_quest_activity_log'
 };
 
 /**
@@ -20,6 +21,9 @@ function initStorage() {
     }
     if (localStorage.getItem(STORAGE_KEYS.COMPLETED_QUESTS) === null) {
         localStorage.setItem(STORAGE_KEYS.COMPLETED_QUESTS, JSON.stringify([]));
+    }
+    if (localStorage.getItem(STORAGE_KEYS.ACTIVITY_LOG) === null) {
+        localStorage.setItem(STORAGE_KEYS.ACTIVITY_LOG, JSON.stringify([]));
     }
 }
 
@@ -87,6 +91,34 @@ function completeQuest(questId) {
     }
 }
 
+function getActivityLog() {
+    try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEYS.ACTIVITY_LOG)) || [];
+    } catch (e) {
+        return [];
+    }
+}
+
+function addActivityLog(entry) {
+    const logs = getActivityLog();
+    logs.unshift({
+        at: new Date().toISOString(),
+        page: entry.page || 'quest',
+        chapterId: entry.chapterId || null,
+        questId: entry.questId || null,
+        title: entry.title || '',
+        command: entry.command || '',
+        result: entry.result || 'info',
+        xp: entry.xp || 0
+    });
+
+    localStorage.setItem(STORAGE_KEYS.ACTIVITY_LOG, JSON.stringify(logs.slice(0, 100)));
+}
+
+function clearActivityLog() {
+    localStorage.setItem(STORAGE_KEYS.ACTIVITY_LOG, JSON.stringify([]));
+}
+
 /**
  * ล้างเซฟเกมทั้งหมด (เผื่อทำปุ่ม Reset Game ในหน้า Profile)
  */
@@ -94,6 +126,7 @@ function resetGameProgress() {
     localStorage.removeItem(STORAGE_KEYS.XP);
     localStorage.removeItem(STORAGE_KEYS.UNLOCKED_CHAPTERS);
     localStorage.removeItem(STORAGE_KEYS.COMPLETED_QUESTS);
+    localStorage.removeItem(STORAGE_KEYS.ACTIVITY_LOG);
     initStorage();
 }
 

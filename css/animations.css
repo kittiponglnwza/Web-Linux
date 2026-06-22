@@ -366,3 +366,92 @@ main.container,
         transition-duration: 1ms !important;
     }
 }
+
+/* Minimal mode overrides */
+body::before {
+    z-index: 0;
+    background:
+        linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.022) 1px, transparent 1px) !important;
+    background-size: 56px 56px !important;
+    opacity: 0.22 !important;
+    animation: none !important;
+}
+
+body::after {
+    display: none !important;
+}
+
+body > * {
+    position: relative;
+    z-index: 1;
+}
+
+.navbar,
+main.container,
+.main-layout,
+.hero-section > *,
+.home-side > *,
+.page-header > *,
+.learn-container > *,
+.quest-info-section,
+.quest-terminal-section,
+.profile-container > *,
+.challenge-container > *,
+.world-selector-tabs,
+.chapter-card,
+.history-item,
+.stat-card,
+.command-card,
+.chapter-card.current,
+.highlight,
+.rank-display,
+.xp-display,
+.stat-value,
+.prompt-arrow,
+.badge,
+.mission-badge,
+.section-pill,
+.profile-banner,
+.profile-avatar {
+    animation: none !important;
+    filter: none !important;
+    text-shadow: none !important;
+}
+
+.card::after,
+.learn-container::after,
+.terminal-window::after,
+.chapter-card::after,
+.command-card::after,
+.lesson-section::after,
+.complete-screen::after,
+.terminal-window::before,
+.btn::before,
+.world-tab::before,
+.submit-btn::before,
+.next-btn::before,
+.progress-bar::after {
+    display: none !important;
+}
+
+.card:hover,
+.learn-container:hover,
+.terminal-window:hover,
+.chapter-card:hover,
+.command-card:hover,
+.lesson-section:hover,
+.btn:hover,
+.world-tab:hover,
+.submit-btn:hover,
+.next-btn:hover {
+    box-shadow: var(--shadow-soft) !important;
+}
+
+.terminal-window {
+    box-shadow: var(--shadow-soft) !important;
+}
+
+.progress-bar {
+    background: var(--primary) !important;
+}

@@ -110,9 +110,13 @@
     <header class="navbar">
         <div class="container navbar-container">
             <a href="index.html" class="logo"> ⚡ Challenge Mode</a>
-            <nav style="display: flex; gap: 1rem; align-items: center;">
+            <nav aria-label="Main navigation">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="chapters.html" class="nav-link">Chapters</a>
+                <a href="challenge.html" class="nav-link active">Challenge</a>
+                <a href="profile.html" class="nav-link">Log</a>
                 <div class="user-status-nav" id="nav-status">
-                    <!-- <span class="badge" id="nav-rank">Loading...</span> -->
+                    <span class="badge" id="nav-rank">Loading...</span>
                     <span class="xp-text" id="nav-xp">0 XP</span>
                 </div>
                 <a href="profile.html" class="btn btn-secondary">โปรไฟล์ผู้เล่น</a>
@@ -132,8 +136,8 @@
 
     </main>
 
-    
-
+    <script src="js/storage.js"></script>
+    <script src="js/ui.js"></script>
     <script>
         let globalChallenges = [];
         let currentIndex = 0;
@@ -242,6 +246,15 @@ Reward:
             const isCorrect = mission.answers.some(ans => ans.trim() === userAnswer);
 
             if (isCorrect) {
+                addActivityLog({
+                    page: 'challenge',
+                    chapterId: mission.chapterId,
+                    questId: mission.id,
+                    title: mission.title,
+                    command: userAnswer,
+                    result: 'success',
+                    xp: mission.xp
+                });
                 result.className = "result success";
                 result.innerHTML = `
                     ✅ Mission Complete<br>
@@ -250,6 +263,15 @@ Reward:
                 `;
                 input.disabled = true;
             } else {
+                addActivityLog({
+                    page: 'challenge',
+                    chapterId: mission.chapterId,
+                    questId: mission.id,
+                    title: mission.title,
+                    command: userAnswer,
+                    result: 'failed',
+                    xp: 0
+                });
                 result.className = "result fail";
                 result.innerHTML = `❌ Incorrect Command`;
             }

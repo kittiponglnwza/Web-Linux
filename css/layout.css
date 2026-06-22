@@ -25,9 +25,10 @@
 .navbar nav {
     display: flex !important;
     align-items: center;
-    gap: 0.75rem !important;
-    flex-wrap: wrap;
+    gap: 0.4rem !important;
+    flex-wrap: nowrap;
     justify-content: flex-end;
+    min-width: 0;
 }
 
 .logo {
@@ -37,6 +38,33 @@
     letter-spacing: 0;
     text-decoration: none;
     white-space: nowrap;
+}
+
+.nav-link {
+    min-height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.45rem 0.72rem;
+    border: 1px solid transparent;
+    border-radius: var(--radius-sm);
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    font-weight: 700;
+    line-height: 1;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    border-color: rgba(148, 163, 184, 0.26);
+    background: rgba(148, 163, 184, 0.08);
+    color: var(--text-main);
+}
+
+.navbar nav > .btn {
+    display: none;
 }
 
 .main-layout {
@@ -164,12 +192,14 @@ main.container[style] {
 
     .navbar nav {
         width: 100%;
-        justify-content: space-between;
+        justify-content: flex-start;
+        overflow-x: auto;
+        padding-bottom: 0.15rem;
+        scrollbar-width: thin;
     }
 
     .user-status-nav {
-        min-width: 0;
-        flex: 1;
+        margin-left: auto;
     }
 }
 
