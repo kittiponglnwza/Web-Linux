@@ -106,6 +106,19 @@
 
 <body>
 
+    <header class="navbar">
+        <div class="container navbar-container">
+            <a href="index.html" class="logo"> ⚡ Challenge Mode</a>
+            <nav style="display: flex; gap: 1rem; align-items: center;">
+                <div class="user-status-nav" id="nav-status">
+                    <!-- <span class="badge" id="nav-rank">Loading...</span> -->
+                    <span class="xp-text" id="nav-xp">0 XP</span>
+                </div>
+                <a href="profile.html" class="btn btn-secondary">โปรไฟล์ผู้เล่น</a>
+            </nav>
+        </div>
+    </header>
+
     <main class="container">
 
         <header class="page-header">
@@ -114,20 +127,22 @@
         </header>
 
         <div class="challenge-container" id="challenge-container">
-            </div>
+        </div>
 
     </main>
 
+    
+
     <script>
         let globalChallenges = [];
-        let currentIndex = 0; 
+        let currentIndex = 0;
 
         // ดึงข้อมูลจากไฟล์ JSON
         fetch("/data/challenge.json")
             .then(response => response.json())
             .then(challenges => {
                 globalChallenges = challenges;
-                renderCurrentChallenge(); 
+                renderCurrentChallenge();
             })
             .catch(error => {
                 console.error("Error loading JSON:", error);
@@ -137,7 +152,7 @@
         // ฟังก์ชันแสดงด่านปัจจุบัน
         function renderCurrentChallenge() {
             const container = document.getElementById("challenge-container");
-            
+
             // เช็กว่าทำครบทุกด่านหรือยัง
             if (currentIndex >= globalChallenges.length) {
                 container.innerHTML = `
@@ -153,7 +168,7 @@
 
             // ตกแต่งสีของ Badge ตามประเภทด่าน (Quest ปกติสีเขียว / Boss สีแดง)
             const isBoss = mission.type === "boss";
-            const badgeStyle = isBoss 
+            const badgeStyle = isBoss
                 ? `background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); color: #f87171;`
                 : `background: rgba(16, 185, 129, .15); border: 1px solid rgba(16, 185, 129, .3); color: #34d399;`;
 
